@@ -2,9 +2,7 @@ from datetime import datetime
 import sys
 from typing import NamedTuple
 
-import requests
-
-from httpbase import Route, HTTPBaseClient, Resource, HTTPResponseCodes, HTTPMethods
+from httpbase import Route, HTTPBaseClient, Resource, HTTPResponseCodes, HTTPMethods, Response
 
 
 class Todo(Resource):
@@ -47,10 +45,10 @@ class TodoClient(HTTPBaseClient):
             req_kwargs["headers"] = my_headers
         return req_kwargs
 
-    def new_todo(self, todo: Todo) -> requests.Response:
+    def new_todo(self, todo: Todo) -> Response:
         return self._make_request(routes.new_todo, data=todo.json())
 
-    def get_todo(self, todo_id) -> requests.Response:
+    def get_todo(self, todo_id) -> Response:
         return self._make_request(routes.get_todo, todo_id=todo_id)
 
     def search_todos(self, **params):

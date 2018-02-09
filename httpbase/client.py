@@ -2,9 +2,12 @@ import json
 
 import requests
 
-from .constants import HTTPResponseCodes
+from .constants import HTTPResponseCodes, _RequestsKwargs
 from .exceptions import ConfigurationError, RouteError
 from .routes import Route
+
+
+_request_kwargs = _RequestsKwargs()
 
 
 def _get_error_response(code: int, message: str) -> requests.Response:
@@ -31,28 +34,26 @@ class HTTPBaseClient(object):
         return req_kwargs
 
     @staticmethod
-    def _is_route_kwarg(key: str, route: Route) -> bool:
+    def _is_requests_kwarg(key: str) -> bool:
         """
         Checks whether or not a given key belongs to a route.
 
         Args:
             key: A dictionary key
-            route: A route object.
         """
-        return key in route.vars or key in route.params
+        return key in _request_kwargs
 
-    def _strip_route_kwargs(self, kwargs: dict, route: Route) -> dict:
+    def _strip_route_kwargs(self, kwargs: dict) -> dict:
         """
         Removes kwargs that come from client methods. ``requests`` will choke on unexpected kwargs so this needs
         to be done.
 
         Args:
             kwargs: The kwargs form the client methods
-            route: A route object
         """
-        return {key: value for key, value in kwargs.items() if not self._is_route_kwarg(key, route)}
+        return {key: value for key, value in kwargs.items() if self._is_requests_kwarg(key)}
 
-    def _prep_request(self, route: Route, **kwargs) -> dict:
+    def _prep_request(self, **kwargs) -> dict:
         """
         Remove kwargs that ``requests`` will choke on and add any missing required headers.
 
@@ -60,7 +61,7 @@ class HTTPBaseClient(object):
             route: The ``Route`` corresponding to the request.
             **kwargs:
         """
-        req_kwargs = self._strip_route_kwargs(kwargs, route)
+        req_kwargs = self._strip_route_kwargs(kwargs)
         req_kwargs = self._inject_headers(req_kwargs)
         return req_kwargs
 
@@ -76,11 +77,13 @@ class HTTPBaseClient(object):
         Args:
             route: The route for the request. Contains the path, HTTP method, template variable names for the URL and
                 accepted query params.
-            **kwargs: Takes several optional kwargs to build the request:
-                params:  Dictionary or bytes to be sent in the query string for the :class:`Request`.
-                data:  Dictionary, bytes, or file-like object to send in the body of the :class:`Request`.
-                json:  json to send in the body of the
-                    :class:`Request`.
+
+            **kwargs: Takes several optional kwargs to build the request, these should look familiar as they are the
+                kwargs that ``requests`` accepts:
+
+                params:  Dictionary or bytes to be sent in the query string for the request.
+                data:  Dictionary, bytes, or file-like object to send in the body of the request.
+                json:  json to send in the body of the request.
                 headers:  Dictionary of HTTP Headers to send with the
                 cookies:  Dict or CookieJar object to send with the
                 files:  Dictionary of ``'filename': file-like-objects`` for multipart encoding upload.
@@ -96,7 +99,7 @@ class HTTPBaseClient(object):
 
                 As well as any additional kwargs your client specific client methods might need.
         """
-        req_kwargs = self._prep_request(route, **kwargs)
+        req_kwargs = self._prep_request(**kwargs)
         try:
             url = route.get_url(self.baseurl, **kwargs)
             return requests.request(route.method, url, **req_kwargs)

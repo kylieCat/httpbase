@@ -4,3 +4,7 @@ class RouteError(Exception):
 
 class ConfigurationError(Exception):
     pass
+
+
+class SerializationError(Exception):
+    pass

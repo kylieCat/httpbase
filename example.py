@@ -27,7 +27,7 @@ class _Routes(NamedTuple):
     # Basic route. No template variables, no query params
     new_todo: Route = Route("/api/todos", HTTPMethods.POST)
     # Path that needs an id.
-    get_todo: Route = Route("/api/todos/{todo_id}", HTTPMethods.GET, vars={"todo_id"})
+    get_todo: Route = Route("/api/todos/{todo_id}", HTTPMethods.GET)
     # Path that has some query params it will honor
     search_todos: Route = Route("/api/todos/", HTTPMethods.GET, params={"title", "done"})
 

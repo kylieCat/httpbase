@@ -90,5 +90,21 @@ class _HTTPResponseCodes(NamedTuple):
     NETWORK_AUTHENTICATION_REQUIRED: int = 511
 
 
+class _RequestsKwargs(NamedTuple):
+    params: str = "params"
+    data: str = "data"
+    json: str = "json"
+    headers: str = "headers"
+    cookies: str = "cookies"
+    files: str = "files"
+    auth: str = "auth"
+    timeout: str = "timeout"
+    allow_redirects: str = "allow_redirects"
+    proxies: str = "proxies"
+    stream: str = "stream"
+    verify: str = "verify"
+    cert: str = "cert"
+
+
 HTTPMethods = _HTTPMethods()
 HTTPResponseCodes = _HTTPResponseCodes()

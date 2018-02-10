@@ -3,8 +3,11 @@ python:
   - "3.6"
 install:
   - pip install -r requirements.txt
+  - pip install coveralls
 script:
-  - python3 -m unittest
+  - coverage run --source httpbase setup.py test
+after_success:
+    coveralls
 deploy:
   provider: pypi
   user: imauld

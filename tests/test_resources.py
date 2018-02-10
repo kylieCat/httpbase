@@ -63,7 +63,7 @@ class TestResource(TestCase):
         actual, errors = resource.dict()
         self.assertEqual(expected, actual)
 
-    def test_serialize_dict_error_case(self):
+    def test_serialize_sequence_error_case(self):
         unsafe_value = datetime.utcnow()
         resource = FlatResource(["foo", unsafe_value])
         actual, errors = resource.dict()

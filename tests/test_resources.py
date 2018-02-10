@@ -1,4 +1,5 @@
 from datetime import datetime
+import json
 from unittest import TestCase
 
 from httpbase.resources import Resource
@@ -62,6 +63,13 @@ class TestResource(TestCase):
         actual, errors = resource.dict()
         self.assertEqual(expected, actual)
 
+    def test_serialize_dict_error_case(self):
+        unsafe_value = datetime.utcnow()
+        resource = FlatResource(["foo", unsafe_value])
+        actual, errors = resource.dict()
+        self.assertFalse(actual)
+        self.assertTrue(errors)
+
     def test_dict_can_handle_complex_resources(self):
         expected = {
             "bar": 123,
@@ -80,9 +88,41 @@ class TestResource(TestCase):
         actual, errors = resource.dict()
         self.assertEqual(expected, actual)
 
-    def test_json(self):
+    def test_dict_can_handle_dicts(self):
+        expected = {"bar_id": {"pk": self.pk}, "bar": {"fooId": {self.pk: "foo"}}}
+        resource = NestedResource({"pk": self.pk}, {self.pk: "foo"})
+        actual, errors = resource.dict()
+        self.assertEqual(expected, actual)
+        self.assertFalse(errors)
+
+    def test_serialize_dict_error_case(self):
+        unsafe_value = datetime.utcnow()
+        resource = FlatResource({"foo": unsafe_value})
+        actual, errors = resource.dict()
+        self.assertFalse(actual)
+        self.assertTrue(errors)
+
+    def test_json_raises(self):
         unsafe_value = datetime.utcnow()
         resource = NestedResource(self.pk, unsafe_value)
         with self.assertRaises(resource.SerializationError):
             resource.json()
+
+    def test_json(self):
+        expected = json.dumps({
+            "bar": 123,
+            "foo": ["abc", 123, [1, 2, 3]],
+            "baz": {
+                "fooId": 123,
+            },
+            "qux": {
+                "bar_id": 456,
+                "bar": {
+                    "fooId": "def"
+                }
+            }
+        })
+        resource = ComplexResource()
+        actual = resource.json()
+        self.assertEqual(expected, actual)
 

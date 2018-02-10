@@ -2,7 +2,7 @@ import json
 from unittest import TestCase, mock
 
 from httpbase.client import HTTPBaseClient
-from httpbase.constants import HTTPMethods
+from httpbase.constants import HTTPMethods, HTTPResponseCodes
 from httpbase.routes import Route
 
 
@@ -57,3 +57,15 @@ class TestClient(TestCase):
             data=json.dumps({"foo": "bar"}),
             headers={"Content-Type": "application/json"}
         )
+
+    @mock.patch("httpbase.client.requests.request")
+    def test_error_response(self, mock_requests):
+        kwargs = {
+            "data": json.dumps({"foo": "bar"}),
+            "headers": {"Content-Type": "application/json"}
+        }
+        route = Route("/api/foo/{foo_id}", HTTPMethods.GET)
+        resp = self.client._make_request(route, **kwargs)
+        self.assertEqual(resp.status_code, HTTPResponseCodes.BAD_REQUEST)
+        self.assertIn("message", resp.json())
+        mock_requests.assert_not_called()

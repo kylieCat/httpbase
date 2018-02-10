@@ -15,15 +15,21 @@ class Resource(object):
         mapped_fields: Some fields have a different name on class instances than they do within the JSON spec of
         the service you are communicating with. This can happen for a few reasons (snake case vs camel case) so add
         mappings here if that comes up. This is a very naive solution but it should work for most cases.
-        Dict[class_attr, api_field]
+        List[Tuple[class_attr, api_field]]
 
     Returns:
         dict[str, JSON], dict[str, str]: Returns a dictionary that is safe to JSON serialize. It also returns a
             dictionary of the names and types of fields that aren't JSON serializable by default. What you do with this
             information is up to you.
     """
-    _mapped_fields: Dict[str, str] = {}
+    mapped_fields: List[Tuple[str, str]] = []
+    _api_to_client = {}
+    _client_to_api = {}
     SerializationError = SerializationError
+
+    def __init__(self, *args, **kwargs):
+        self._api_to_client = {k: v for k, v in self.mapped_fields}
+        self._client_to_api = {v: k for v, k in self.mapped_fields}
 
     def _serialize_sequence(self, seq: Union[List, Tuple]) -> Tuple[List, Any]:
         """
@@ -70,7 +76,7 @@ class Resource(object):
                 result[k] = r
         return result, error
 
-    def _serialize_field_value(self, value):
+    def _serialize_field_value(self, value: Any) -> Tuple[JSON, str]:
         result, error = None, None
         if isinstance(value, (str, int, float, bool)) or value is None:
             return value, error
@@ -84,7 +90,7 @@ class Resource(object):
             error = value.__class__.__name__
         return result, error
 
-    def dict(self):
+    def dict(self) -> Tuple[Dict[str, JSON], Dict[str, str]]:
         """
         Returns a dictionary suitable for use with `json.dumps()`. If your subclass has complex types as
         values you should override this and make it so that the call to `your_class.dict()` will return something JSON
@@ -93,7 +99,7 @@ class Resource(object):
         results, errors = {}, {}
         for k, v in self.__dict__.items():
             if not k.startswith("_"):
-                field = self._mapped_fields.get(k, k)
+                field = self._client_to_api.get(k, k)
                 result, error = self._serialize_field_value(v)
                 if error:
                     errors[field] = error

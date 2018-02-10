@@ -5,37 +5,33 @@ from typing import NamedTuple
 from httpbase import Route, HTTPBaseClient, Resource, HTTPResponseCodes, HTTPMethods, Response
 
 
-class Todo(Resource):
+class Post(Resource):
     # Sometimes the Pythonic naming conventions won't match with the service you are calling. This can help.
-    _mapped_fields = {"started_on": "startedOn"}
+    _mapped_fields = [("user_id", "userId")]
 
-    def __init__(self, title: str, done: bool=False, started_on: int=None, id: int=None):
+    def __init__(self, title: str, body: str, user_id: int, id: int=None, **kwargs):
+        # Don't forget to call super!
+        super().__init__()
         self.id = id
+        self.user_id = user_id
         self.title = title
-        self.done = done
-        if started_on is None:
-            started_on = int(datetime.utcnow().timestamp())
-        self.started_on = started_on
-
-    @classmethod
-    def from_dict(cls, d: dict):
-        return cls(**d)
+        self.body = body
 
 
 # You don't have to do this but I prefer to have all the routes in a container
 class _Routes(NamedTuple):
     # Basic route. No template variables, no query params
-    new_todo: Route = Route("/api/todos", HTTPMethods.POST)
+    new_post: Route = Route("/posts", HTTPMethods.POST)
     # Path that needs an id.
-    get_todo: Route = Route("/api/todos/{todo_id}", HTTPMethods.GET)
+    get_post: Route = Route("/posts/{post_id}", HTTPMethods.GET)
     # Path that has some query params it will honor
-    search_todos: Route = Route("/api/todos/", HTTPMethods.GET, params={"title", "done"})
+    search_posts: Route = Route("/posts", HTTPMethods.GET, params={"userId"})
 
 
 routes = _Routes()
 
 
-class TodoClient(HTTPBaseClient):
+class PostClient(HTTPBaseClient):
     # Sometimes you'll need to add some headers that consuming code doesn't know about (or shouldn't know about).
     def _inject_headers(self, req_kwargs: dict) -> dict:
         my_headers = {"Authorization": "Bearer XXXX"}
@@ -45,23 +41,24 @@ class TodoClient(HTTPBaseClient):
             req_kwargs["headers"] = my_headers
         return req_kwargs
 
-    def new_todo(self, todo: Todo) -> Response:
-        return self._make_request(routes.new_todo, data=todo.json())
+    def new_post(self, post: Post) -> Response:
+        return self._make_request(routes.new_post, data=post.json())
 
-    def get_todo(self, todo_id) -> Response:
-        return self._make_request(routes.get_todo, todo_id=todo_id)
+    def get_post(self, post_id) -> Response:
+        return self._make_request(routes.get_post, post_id=post_id)
 
-    def search_todos(self, **params):
-        return self._make_request(routes.search_todos, params=params)
+    def search_posts(self, **params):
+        return self._make_request(routes.search_posts, params=params)
 
 
 if __name__ == "__main__":
     # Create a client and give the full URL of the service you want to interact with
-    client = TodoClient("http://todoservice.com")
+    client = PostClient("https://jsonplaceholder.typicode.com")
 
     # Create a resource
-    todo = Todo("My first Todo")
-    response = client.new_todo(todo)
+    todo = Post("My first Post", "Some body text", 1)
+    response = client.new_post(todo)
+    print(response.json())
 
     # Use constants like a civilized person
     if response.status_code == HTTPResponseCodes.INTERNAL_SERVER_ERROR:
@@ -71,7 +68,5 @@ if __name__ == "__main__":
         print("you messed up")
         sys.exit(1)
 
-    todo2 = Todo.from_dict(response.json())
-    response = client.get_todo(todo2.id)
-
-    response = client.search_todos(title="foo")
+    response = client.get_post(1)
+    print(response.json())

@@ -6,20 +6,23 @@ from httpbase.resources import Resource
 
 
 class FlatResource(Resource):
-    _mapped_fields = {"foo_id": "fooId"}
+    mapped_fields = [("foo_id", "fooId")]
 
     def __init__(self, foo_id):
+        super().__init__()
         self.foo_id = foo_id
 
 
 class NestedResource(Resource):
     def __init__(self, bar_id, bar):
+        super().__init__()
         self.bar_id = bar_id
         self.bar = FlatResource(bar)
 
 
 class ComplexResource(Resource):
     def __init__(self):
+        super().__init__()
         self.bar = 123
         self.foo = ["abc", 123, (1, 2, 3)]
         self.baz = FlatResource(123)

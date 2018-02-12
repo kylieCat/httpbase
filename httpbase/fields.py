@@ -1,6 +1,5 @@
 from typing import Callable
 
-from .constants import _marker
 from .exceptions import ImmutableFieldError, NonNullableField
 
 
@@ -17,20 +16,37 @@ class Field(object):
         self.default = default
         self.immutable = immutable
         self.validator = validator
+        self.parent = self._set_parent(kwargs.pop("_parent"))
+        self.printable: bool = kwargs.get("printable", True)
+
+    @staticmethod
+    def _set_parent(parent):
+        if parent is None:
+            from .resources import Resource
+            parent = Resource
+        return parent
 
     def __repr__(self):
-        return f"<{self.__class__.__name__}: {self.value}>"
+        if self.printable:
+            message = f"<{self.__class__.__name__}: {self.value}>"
+        else:
+            message = f"<{self.__class__.__name__}: XXXXXX>"
+        return message
 
     def to_value(self):
+        # Don't attempt to validate null values
+        if self.nullable and self.value is None:
+            return self.value
         return self.validator(self.value)
 
     def set_value(self, value):
         if self.immutable:
-            raise ImmutableFieldError(f"{self} has been set as immutable")
-        if value is None and not self.nullable:
-            raise NonNullableField(f"{self} cannot be null")
-        if value is _marker:
-            value = self.default
+            raise ImmutableFieldError(f"{self.parent.__class__.__name__}.{self.label} has been set as immutable")
+        if value is None:
+            if not self.nullable:
+                raise NonNullableField(f"{self} cannot be null")
+            else:
+                value = self.default
         self.value = value
 
 
@@ -44,7 +60,7 @@ class IntField(Field):
 class StrField(Field):
     def __init__(self, **kwargs):
         if "validator" not in kwargs:
-            kwargs["validator"] = int
+            kwargs["validator"] = str
         super().__init__(**kwargs)
 
 
@@ -64,3 +80,29 @@ class ListField(Field):
 class MapField(Field):
     def to_value(self):
         return {key: self.validator(value) for key, value in self.value}
+
+
+class DateField(Field):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.format = kwargs.get("format", "%Y-%m-%d %H:%M:%s")
+
+    def to_value(self):
+        try:
+            return self.value.strftime(self.format)
+        except AttributeError:
+            raise TypeError(f"value {self.value} of type {self.value.__class__.__name__} can't be serialized as a date.")
+
+
+class EpochField(Field):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.include_fractions = kwargs.get("include_fractions", True)
+
+    def to_value(self):
+        try:
+            if self.include_fractions:
+                return self.value.timestamp()
+            return int(self.value.timestamp())
+        except AttributeError:
+            raise TypeError(f"Failed to serialize {self}. Expected 'datetime' got {self.value.__class__.__name__}")

@@ -77,7 +77,7 @@ class ListField(Field):
 
 class MapField(Field):
     def to_value(self):
-        return {key: self.validator(value) for key, value in self.value}
+        return {key: self.validator(value) for key, value in self.value.items()}
 
 
 class DateField(Field):

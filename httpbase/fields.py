@@ -16,15 +16,13 @@ class Field(object):
         self.default = default
         self.immutable = immutable
         self.validator = validator
-        self.parent = self._set_parent(kwargs.pop("_parent"))
         self.printable: bool = kwargs.get("printable", True)
 
-    @staticmethod
-    def _set_parent(parent):
+    def _set_parent(self, parent):
         if parent is None:
             from .resources import Resource
             parent = Resource
-        return parent
+        self.parent = parent
 
     def __repr__(self):
         if self.printable:
@@ -44,7 +42,7 @@ class Field(object):
             raise ImmutableFieldError(f"{self.parent.__class__.__name__}.{self.label} has been set as immutable")
         if value is None:
             if not self.nullable:
-                raise NonNullableField(f"{self} cannot be null")
+                raise NonNullableField(f"{self.parent.__class__.__name__}.{self.label} cannot be null")
             else:
                 value = self.default
         self.value = value

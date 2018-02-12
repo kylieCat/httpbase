@@ -37,8 +37,9 @@ class Resource(metaclass=ResourceMetaclass):
     def __init__(self, **kwargs):
         self._errors = {}
         self._fields = {}
-        kwargs["_parent"] = self
+        self.parent = None
         for key, field in self.fields.items():
+            field._set_parent(self)
             field = self.fields.get(key)
             field.set_value(kwargs.get(key))
             setattr(self, key, field)

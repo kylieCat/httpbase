@@ -7,7 +7,7 @@ from httpbase.fields import IntField, ResourceField, ListField
 
 
 class FlatResource(Resource):
-        foo_id = IntField(label="fooId", default=123)
+        foo_id = IntField(label="fooId", nullable=True, default=123)
 
 
 class NestedResource(Resource):
@@ -16,10 +16,10 @@ class NestedResource(Resource):
 
 
 class ComplexResource(Resource):
-        bar = IntField(label="bar", default=123)
-        foo = ListField(label="foo", default=["abc", "123", "def"])
-        baz = ResourceField(label="baz", default=FlatResource())
-        qux = ResourceField(label="qux", default=NestedResource(bar_id=456, bar=FlatResource(foo_id=456)))
+        bar = IntField(label="bar", nullable=True, default=123)
+        foo = ListField(label="foo", nullable=True, default=["abc", "123", "def"])
+        baz = ResourceField(label="baz", nullable=True, default=FlatResource())
+        qux = ResourceField(label="qux", nullable=True, default=NestedResource(bar_id=456, bar=FlatResource(foo_id=456)))
 
 
 class TestResource(TestCase):

@@ -7,7 +7,7 @@ if sys.version_info < (3, 6):
 
 setup(
     name='httpbase',
-    version="0.4.0",
+    version="0.4.1",
     author='Ian Auld',
     author_email='imauld@gmail.com',
     description="Library for quickly making those simple HTTP clients we all end up writing all the time",

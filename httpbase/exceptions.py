@@ -8,3 +8,11 @@ class ConfigurationError(Exception):
 
 class SerializationError(Exception):
     pass
+
+
+class ImmutableFieldError(Exception):
+    pass
+
+
+class NonNullableField(Exception):
+    pass

@@ -108,3 +108,4 @@ class _RequestsKwargs(NamedTuple):
 
 HTTPMethods = _HTTPMethods()
 HTTPResponseCodes = _HTTPResponseCodes()
+_marker = object()

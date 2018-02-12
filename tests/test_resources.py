@@ -3,30 +3,23 @@ import json
 from unittest import TestCase
 
 from httpbase.resources import Resource
+from httpbase.fields import IntField, ResourceField, ListField
 
 
 class FlatResource(Resource):
-    mapped_fields = [("foo_id", "fooId")]
-
-    def __init__(self, foo_id):
-        super().__init__()
-        self.foo_id = foo_id
+        foo_id = IntField(label="fooId", default=123)
 
 
 class NestedResource(Resource):
-    def __init__(self, bar_id, bar):
-        super().__init__()
-        self.bar_id = bar_id
-        self.bar = FlatResource(bar)
+        bar_id = IntField(label="bar_id")
+        bar = ResourceField(label="bar")
 
 
 class ComplexResource(Resource):
-    def __init__(self):
-        super().__init__()
-        self.bar = 123
-        self.foo = ["abc", 123, (1, 2, 3)]
-        self.baz = FlatResource(123)
-        self.qux = NestedResource(456, "def")
+        bar = IntField(label="bar", default=123)
+        foo = ListField(label="foo", default=["abc", "123", "def"])
+        baz = ResourceField(label="baz", default=FlatResource())
+        qux = ResourceField(label="qux", default=NestedResource(bar_id=456, bar=FlatResource(foo_id=456)))
 
 
 class TestResource(TestCase):
@@ -35,93 +28,61 @@ class TestResource(TestCase):
 
     def test_dict(self):
         expected = {"fooId": self.pk}
-        resource = FlatResource(self.pk)
-        actual, errors = resource.dict()
+        resource = FlatResource(foo_id=self.pk)
+        actual = resource.dict()
         self.assertEqual(expected, actual)
-        self.assertFalse(errors)
+        self.assertFalse(resource.errors)
 
     def test_nested_dict(self):
         expected = {"bar_id": self.pk, "bar": {"fooId": self.pk}}
-        resource = NestedResource(self.pk, self.pk)
-        actual, errors = resource.dict()
+        resource = NestedResource(bar_id=self.pk, bar=FlatResource())
+        actual = resource.dict()
         self.assertEqual(expected, actual)
-        self.assertFalse(errors)
+        self.assertFalse(resource.errors)
 
     def test_dict_finds_errors(self):
         unsafe_value = datetime.utcnow()
         expected = {"bar_id": self.pk}
-        resource = NestedResource(self.pk, unsafe_value)
-        actual, errors = resource.dict()
+        resource = NestedResource(bar_id=self.pk, bar=unsafe_value)
+        actual = resource.dict()
         self.assertEqual(expected, actual)
-        self.assertTrue(errors)
-
-    def test_dict_can_handle_sequences(self):
-        expected = {"fooId": [1, 2, 3]}
-        resource = FlatResource([1, 2, 3])
-        actual, errors = resource.dict()
-        self.assertEqual(expected, actual)
-
-        expected = {"fooId": [1, 2, 3]}
-        resource = FlatResource((1, 2, 3))
-        actual, errors = resource.dict()
-        self.assertEqual(expected, actual)
-
-    def test_serialize_sequence_error_case(self):
-        unsafe_value = datetime.utcnow()
-        resource = FlatResource(["foo", unsafe_value])
-        actual, errors = resource.dict()
-        self.assertFalse(actual)
-        self.assertTrue(errors)
+        self.assertTrue(resource.errors)
 
     def test_dict_can_handle_complex_resources(self):
         expected = {
             "bar": 123,
-            "foo": ["abc", 123, [1, 2, 3]],
+            "foo": ["abc", "123", "def"],
             "baz": {
                 "fooId": 123,
             },
             "qux": {
                 "bar_id": 456,
                 "bar": {
-                    "fooId": "def"
+                    "fooId": 456
                 }
             }
         }
         resource = ComplexResource()
-        actual, errors = resource.dict()
+        actual = resource.dict()
         self.assertEqual(expected, actual)
-
-    def test_dict_can_handle_dicts(self):
-        expected = {"bar_id": {"pk": self.pk}, "bar": {"fooId": {self.pk: "foo"}}}
-        resource = NestedResource({"pk": self.pk}, {self.pk: "foo"})
-        actual, errors = resource.dict()
-        self.assertEqual(expected, actual)
-        self.assertFalse(errors)
-
-    def test_serialize_dict_error_case(self):
-        unsafe_value = datetime.utcnow()
-        resource = FlatResource({"foo": unsafe_value})
-        actual, errors = resource.dict()
-        self.assertFalse(actual)
-        self.assertTrue(errors)
 
     def test_json_raises(self):
         unsafe_value = datetime.utcnow()
-        resource = NestedResource(self.pk, unsafe_value)
+        resource = NestedResource(bar_id=self.pk, bar=unsafe_value)
         with self.assertRaises(resource.SerializationError):
             resource.json()
 
     def test_json(self):
         expected = json.dumps({
             "bar": 123,
-            "foo": ["abc", 123, [1, 2, 3]],
+            "foo": ["abc", "123", "def"],
             "baz": {
                 "fooId": 123,
             },
             "qux": {
                 "bar_id": 456,
                 "bar": {
-                    "fooId": "def"
+                    "fooId": 456
                 }
             }
         })

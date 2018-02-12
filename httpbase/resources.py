@@ -2,7 +2,6 @@ import copy
 import json
 from typing import Dict, Union, Mapping, List
 
-from .constants import _marker
 from .exceptions import SerializationError
 from .fields import Field
 
@@ -13,7 +12,9 @@ JSON = Union[str, int, float, bool, None, Mapping[str, 'JSON'], List['JSON']]
 class ResourceMetaclass(type):
     @classmethod
     def _get_declared_fields(cls, bases, attrs):
-        fields = [(field_name, attrs.pop(field_name)) for field_name, obj in list(attrs.items()) if isinstance(obj, Field)]
+        fields = [
+            (field_name, attrs.pop(field_name)) for field_name, obj in list(attrs.items()) if isinstance(obj, Field)
+        ]
 
         for base in reversed(bases):
             if hasattr(base, '_declared_fields'):
@@ -36,9 +37,10 @@ class Resource(metaclass=ResourceMetaclass):
     def __init__(self, **kwargs):
         self._errors = {}
         self._fields = {}
+        kwargs["_parent"] = self
         for key, field in self.fields.items():
             field = self.fields.get(key)
-            field.set_value(kwargs.get(key, _marker))
+            field.set_value(kwargs.get(key))
             setattr(self, key, field)
 
     def __repr__(self):

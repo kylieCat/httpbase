@@ -2,6 +2,7 @@ import requests
 
 from .client import HTTPBaseClient
 from .constants import HTTPMethods, HTTPResponseCodes
+from .fields import IntField, StrField, ListField, MapField, ResourceField
 from .resources import Resource
 from .routes import Route
 

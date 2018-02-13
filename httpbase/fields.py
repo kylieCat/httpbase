@@ -17,6 +17,7 @@ class Field(object):
         self.immutable = immutable
         self.validator = validator
         self.printable: bool = kwargs.get("printable", True)
+        self.omit_null: bool = kwargs.get("omit_empty", False)
 
     def _set_parent(self, parent):
         if parent is None:
@@ -64,6 +65,8 @@ class StrField(Field):
 
 class ResourceField(Field):
     def to_value(self):
+        if self.value is None and self.nullable:
+            return self.default
         values = {}
         for _, field in self.value.fields.items():
             values[field.label] = field.to_value()

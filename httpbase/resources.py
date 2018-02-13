@@ -66,6 +66,8 @@ class Resource(metaclass=ResourceMetaclass):
         result = {}
         for key, field in self.fields.items():
             try:
+                if field.omit_null and field.value is None:
+                    continue
                 result[field.label] = field.to_value()
             except (TypeError, AttributeError):
                 self._errors[key] = field.value.__class__.__name__

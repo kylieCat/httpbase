@@ -72,11 +72,15 @@ class ResourceField(Field):
 
 class ListField(Field):
     def to_value(self):
+        if self.value is None and self.nullable:
+            return self.default
         return [self.validator(val) for val in self.value]
 
 
 class MapField(Field):
     def to_value(self):
+        if self.value is None and self.nullable:
+            return self.default
         return {key: self.validator(value) for key, value in self.value.items()}
 
 

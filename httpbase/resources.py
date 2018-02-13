@@ -2,6 +2,7 @@ import copy
 import json
 from typing import Dict, Union, Mapping, List
 
+from .constants import null
 from .exceptions import SerializationError
 from .fields import Field
 
@@ -66,10 +67,13 @@ class Resource(metaclass=ResourceMetaclass):
         result = {}
         for key, field in self.fields.items():
             try:
-                if field.omit_null and field.value is None:
+                if field.omit_null and field.value is null:
                     continue
-                result[field.label] = field.to_value()
-            except (TypeError, AttributeError):
+                elif field.value is null:
+                    result[field.label] = None
+                else:
+                    result[field.label] = field.to_value()
+            except (TypeError, AttributeError, ValueError):
                 self._errors[key] = field.value.__class__.__name__
         return result
 

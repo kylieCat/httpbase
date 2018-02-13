@@ -1,6 +1,7 @@
 from typing import Callable
 
-from .exceptions import ImmutableFieldError, NonNullableField
+from .constants import null
+from .exceptions import NonNullableField
 
 
 def _default_validator(value):
@@ -8,16 +9,15 @@ def _default_validator(value):
 
 
 class Field(object):
-    def __init__(self, label: str=None, nullable: bool=False, default=None,
-                 immutable: bool=False, validator: Callable=_default_validator, **kwargs):
+    def __init__(self, label: str=None, nullable: bool=False, default=null,
+                 validator: Callable=_default_validator, **kwargs):
         self.label = label
         self.value = None
         self.nullable = nullable
         self.default = default
-        self.immutable = immutable
         self.validator = validator
         self.printable: bool = kwargs.get("printable", True)
-        self.omit_null: bool = kwargs.get("omit_empty", False)
+        self.omit_null: bool = kwargs.get("omit_null", False)
 
     def _set_parent(self, parent):
         if parent is None:
@@ -39,10 +39,8 @@ class Field(object):
         return self.validator(self.value)
 
     def set_value(self, value):
-        if self.immutable:
-            raise ImmutableFieldError(f"{self.parent.__class__.__name__}.{self.label} has been set as immutable")
         if value is None:
-            if not self.nullable:
+            if not self.nullable and self.default is null:
                 raise NonNullableField(f"{self.parent.__class__.__name__}.{self.label} cannot be null")
             else:
                 value = self.default
@@ -61,6 +59,16 @@ class StrField(Field):
         if "validator" not in kwargs:
             kwargs["validator"] = str
         super().__init__(**kwargs)
+
+
+class BoolField(Field):
+    def __init__(self, **kwargs):
+        if kwargs.get("nullable"):
+            raise NonNullableField(f"{self.__class__.__name__} cannot be null")
+        super().__init__(**kwargs)
+
+    def to_value(self):
+        return bool(self.value)
 
 
 class ResourceField(Field):

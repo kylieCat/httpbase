@@ -108,3 +108,7 @@ class _RequestsKwargs(NamedTuple):
 
 HTTPMethods = _HTTPMethods()
 HTTPResponseCodes = _HTTPResponseCodes()
+
+
+class null:
+    pass

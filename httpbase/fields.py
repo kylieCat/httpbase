@@ -1,11 +1,16 @@
 from typing import Callable
 
-from .constants import null
+from .constants import null, DEFAULT_DATE_FORMAT
 from .exceptions import NonNullableField
 
 
 def _default_validator(value):
-    return value
+    if isinstance(value, (int, str, float, bool)) or value is None:
+        return value
+    else:
+        raise TypeError(
+            "value is not a JSON serializable value or is a container. Add a custom validator or use a container field"
+        )
 
 
 class Field(object):
@@ -98,7 +103,7 @@ class MapField(Field):
 class DateField(Field):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.format = kwargs.get("format", "%Y-%m-%d %H:%M:%s")
+        self.format = kwargs.get("format", DEFAULT_DATE_FORMAT)
 
     def to_value(self):
         try:

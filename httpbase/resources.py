@@ -58,7 +58,7 @@ class Resource(metaclass=ResourceMetaclass):
     def errors(self) -> Dict:
         return {key: value for key, value in self._errors.items()}
 
-    def dict(self) -> Dict[str, JSON]:
+    def dict(self, use_labels=True) -> Dict[str, JSON]:
         """
         Returns a dictionary suitable for use with `json.dumps()`. If your subclass has complex types as
         values you should override this and make it so that the call to `your_class.dict()` will return something JSON
@@ -67,14 +67,18 @@ class Resource(metaclass=ResourceMetaclass):
         result = {}
         for key, field in self.fields.items():
             try:
+                if use_labels:
+                    label = field.label
+                else:
+                    label = key
                 if field.omit_null and field.value is null:
                     continue
                 elif field.value is null:
-                    result[field.label] = None
+                    result[label] = None
                 else:
-                    result[field.label] = field.to_value()
-            except (TypeError, AttributeError, ValueError):
-                self._errors[key] = field.value.__class__.__name__
+                    result[label] = field.to_value()
+            except (TypeError, AttributeError, ValueError) as err:
+                self._errors[key] = f"error from validator: {str(err)}"
         return result
 
     def json(self) -> str:

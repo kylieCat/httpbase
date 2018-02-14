@@ -1,6 +1,9 @@
 from typing import NamedTuple
 
 
+DEFAULT_DATE_FORMAT = "%Y-%m-%d %H:%M:%s"
+
+
 class _HTTPMethods(NamedTuple):
     GET: str = "get"
     PUT: str = "put"

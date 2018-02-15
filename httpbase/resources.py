@@ -93,3 +93,35 @@ class Resource(metaclass=ResourceMetaclass):
             msg = "fields with types {} could not be serialized".format([(k, v) for k, v in self.errors.items()])
             raise SerializationError(msg)
         return json.dumps(d)
+
+    def _traverse_fields(self, path, default=None):
+        field = self
+        levels, target = path.split(".")[:-1], path.split(".")[-1]
+        for level in levels:
+            field = getattr(field, level).value
+        if default is None:
+            default = field
+        return getattr(field, target, default)
+
+    def get(self, path):
+        target = self._traverse_fields(path)
+        return target
+
+    def get_value(self, path):
+        target = self._traverse_fields(path)
+        return target.value
+
+    def update(self, path, value):
+        target = self._traverse_fields(path)
+        target.set_value(value)
+
+    def get_label(self, path):
+        target = self._traverse_fields(path)
+        return target.label
+
+    def labels(self, path=""):
+        target = self._traverse_fields(path)
+        if not hasattr(target, "fields"):
+            target = target.value
+        for key, field in target.fields.items():
+            yield field.label

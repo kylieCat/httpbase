@@ -76,7 +76,7 @@ class Resource(metaclass=ResourceMetaclass):
                 elif field.value is null:
                     result[label] = None
                 else:
-                    result[label] = field.to_value()
+                    result[label] = field.to_value(use_labels=use_labels)
             except (TypeError, AttributeError, ValueError) as err:
                 self._errors[key] = f"error from validator: {str(err)}"
         return result

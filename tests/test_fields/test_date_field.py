@@ -8,6 +8,7 @@ from httpbase.resources import Resource
 
 
 DATE = datetime(2018, 4, 20, 16, 20)
+CUTOFF_DATE = datetime(2018, 4, 15)
 FORMATTED_DATE = DATE.strftime(DEFAULT_DATE_FORMAT)
 
 
@@ -49,10 +50,10 @@ class TestDateField(TestCase):
         value = DATE
 
         def value_in_range(value):
-            if len(value) < 10:
+            if value > CUTOFF_DATE:
                 return value
             else:
-                raise TypeError("not in range")
+                raise TypeError("date not after cutoff")
 
         class Foo(Resource):
             foo = DateField(label="foo", validator=value_in_range)
@@ -89,8 +90,8 @@ class TestDateField(TestCase):
         value = DATE
 
         class Foo(Resource):
-            foo = DateField(label="foo", format="%D ")
+            foo = DateField(label="foo", format="%D")
 
         resource = Foo(foo=value)
         self.assertEqual(resource.foo.value, value)
-        self.assertEqual(resource.dict(), {"foo": FORMATTED_DATE})
+        self.assertEqual(resource.dict(), {"foo": DATE.strftime("%D")})

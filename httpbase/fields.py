@@ -37,7 +37,7 @@ class Field(object):
             message = f"<{self.__class__.__name__}: XXXXXX>"
         return message
 
-    def to_value(self):
+    def to_value(self, **kwargs):
         # Don't attempt to validate null values
         if self.nullable and self.value is None:
             return self.value
@@ -72,29 +72,34 @@ class BoolField(Field):
             raise NonNullableField(f"{self.__class__.__name__} cannot be null")
         super().__init__(**kwargs)
 
-    def to_value(self):
+    def to_value(self, **kwargs):
         return bool(self.value)
 
 
 class ResourceField(Field):
-    def to_value(self):
+    def to_value(self, **kwargs):
+        use_labels = kwargs.get("use_labels", True)
         if self.value is None and self.nullable:
             return self.default
         values = {}
-        for _, field in self.value.fields.items():
+        for key, field in self.value.fields.items():
+            if use_labels:
+                label = field.label
+            else:
+                label= key
             values[field.label] = field.to_value()
         return values
 
 
 class ListField(Field):
-    def to_value(self):
+    def to_value(self, **kwargs):
         if self.value is None and self.nullable:
             return self.default
         return [self.validator(val) for val in self.value]
 
 
 class MapField(Field):
-    def to_value(self):
+    def to_value(self, **kwargs):
         if self.value is None and self.nullable:
             return self.default
         return {key: self.validator(value) for key, value in self.value.items()}
@@ -105,7 +110,7 @@ class DateField(Field):
         super().__init__(**kwargs)
         self.format = kwargs.get("format", DEFAULT_DATE_FORMAT)
 
-    def to_value(self):
+    def to_value(self, **kwargs):
         try:
             return self.value.strftime(self.format)
         except AttributeError:
@@ -117,7 +122,7 @@ class EpochField(Field):
         super().__init__(**kwargs)
         self.include_fractions = kwargs.get("include_fractions", True)
 
-    def to_value(self):
+    def to_value(self, **kwargs):
         try:
             if self.include_fractions:
                 return self.value.timestamp()

@@ -3,7 +3,7 @@ import json
 from unittest import TestCase
 
 from httpbase.resources import Resource
-from httpbase.fields import IntField, ResourceField, ListField, StrField
+from httpbase.fields import IntField, ResourceField, ListField
 
 
 class FlatResource(Resource):

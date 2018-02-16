@@ -83,12 +83,16 @@ class ResourceField(Field):
             return self.default
         values = {}
         for key, field in self.value.fields.items():
-            if use_labels:
-                label = field.label
-            else:
-                label= key
-            values[field.label] = field.to_value()
+            label = self._get_json_key(key, field, use_labels)
+            values[label] = field.to_value()
         return values
+
+    def _get_json_key(self, key, field, use_label):
+        if use_label:
+            label = field.label
+        else:
+            label = key
+        return label
 
 
 class ListField(Field):

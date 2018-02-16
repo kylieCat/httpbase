@@ -3,7 +3,7 @@ import json
 from unittest import TestCase
 
 from httpbase.resources import Resource
-from httpbase.fields import IntField, ResourceField, ListField
+from httpbase.fields import IntField, ResourceField, ListField, StrField
 
 
 class FlatResource(Resource):
@@ -89,3 +89,14 @@ class TestResource(TestCase):
         resource = ComplexResource()
         actual = resource.json()
         self.assertEqual(expected, actual)
+
+    def test_use_labels(self):
+        class Parent(Resource):
+            child = ResourceField()
+
+        class Child(Resource):
+            user_id = IntField(label="userId")
+
+        resource = Parent(child=Child(user_id=123))
+        self.assertIn("userId", resource.dict()["child"])
+        self.assertIn("user_id", resource.dict(use_labels=False)["child"])

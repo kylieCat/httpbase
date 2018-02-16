@@ -52,7 +52,7 @@ class TestClient(TestCase):
     def test_make_request(self, mock_requests):
         self.client._make_request(self.route, **self.kwargs)
         mock_requests.assert_called_with(
-            "get_field",
+            "get",
             "http://example.com/api/foo",
             data=json.dumps({"foo": "bar"}),
             headers={"Content-Type": "application/json"}

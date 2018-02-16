@@ -44,6 +44,8 @@ class Resource(metaclass=ResourceMetaclass):
             field = self.fields.get(key)
             field.set_value(kwargs.get(key))
             setattr(self, key, field)
+            if field.label is None:
+                field.label = key
 
     def __repr__(self):
         return f"<{self.__class__.__name__}>"
@@ -103,7 +105,7 @@ class Resource(metaclass=ResourceMetaclass):
             default = field
         return getattr(field, target, default)
 
-    def get(self, path):
+    def get_field(self, path):
         target = self._traverse_fields(path)
         return target
 

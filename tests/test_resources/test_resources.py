@@ -89,4 +89,3 @@ class TestResource(TestCase):
         resource = ComplexResource()
         actual = resource.json()
         self.assertEqual(expected, actual)
-

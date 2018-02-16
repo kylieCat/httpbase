@@ -120,11 +120,11 @@ class DateField(Field):
 class EpochField(Field):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.include_fractions = kwargs.get("include_fractions", True)
+        self.total_seconds = kwargs.get("total_seconds", True)
 
     def to_value(self, **kwargs):
         try:
-            if self.include_fractions:
+            if self.total_seconds:
                 return self.value.timestamp()
             return int(self.value.timestamp())
         except AttributeError:

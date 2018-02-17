@@ -11,6 +11,7 @@ _request_kwargs = _RequestsKwargs()
 
 
 def _get_error_response(code: int, message: str) -> requests.Response:
+    """"""
     resp = requests.Response()
     resp.status_code = code
     resp.headers = {"Content-Type": "application/json"}
@@ -19,34 +20,52 @@ def _get_error_response(code: int, message: str) -> requests.Response:
 
 
 class HTTPBaseClient(object):
-    def __init__(self, baseurl, *args, **kwargs):
+    """
+    Base class for creating HTTP clients. Handles getting URL's from ```Route`` objects, parsing kwargs, injecting
+    headers, and does the work of actually sending the request. Some of these can be overridden to extend functionality
+    as required:
+
+    Methods:
+         __init__(str) -> HTTPBaseClient
+         _inject_headers(dict[str, str]) -> dict
+         _is_requets_kwarg(str) -> bool
+         _strip_route_kwargs(dict) -> dict
+         _prep_request(**dict) -> dict
+         _make_request(Route, **dict) -> requests.Response
+    """
+    def __init__(self, baseurl: str, *args, **kwargs):
         self.baseurl = baseurl
 
     ConfigurationError = ConfigurationError
 
     def _inject_headers(self, req_kwargs: dict) -> dict:
         """
-        Inject any additional headers users may not have added or shouldn't need to know about.
+        Inject any additional headers users may not have added or shouldn't need to know about. This method can and
+        probably should be overridden. When overriding don't forget to check for and update any existing headers. Don't
+        just blindly overwrite them.
 
         Args:
-            req_kwargs: A dictionary of kwargs with the route specific values removed.
+            req_kwargs: A dictionary of kwargs with the route specific values removed. May contain a ``headers`` key
+                already.
         """
         return req_kwargs
 
     @staticmethod
     def _is_requests_kwarg(key: str) -> bool:
         """
-        Checks whether or not a given key belongs to a route.
+        Checks whether or not a given key belongs is one fo the kwargs ``requests`` accepts. This probably shouldn't be
+        overridden.
 
         Args:
-            key: A dictionary key
+            key: A dictionary key. Will be checked against ``constants._RequestsKwargs``
         """
         return key in _request_kwargs
 
     def _strip_route_kwargs(self, kwargs: dict) -> dict:
         """
         Removes kwargs that come from client methods. ``requests`` will choke on unexpected kwargs so this needs
-        to be done.
+        to be done. If this method is overridden it should still return a dictionary that can be consumed by
+        ``requests``.
 
         Args:
             kwargs: The kwargs form the client methods

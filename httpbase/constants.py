@@ -2,9 +2,11 @@ from typing import NamedTuple
 
 
 DEFAULT_DATE_FORMAT = "%Y-%m-%d %H:%M:%s"
-
+TEMPLATE_VARIABLE_PATTERN = r"{(\w+)}"
 
 class _HTTPMethods(NamedTuple):
+    """Container class for HTTP request methods.
+    """
     GET: str = "get"
     PUT: str = "put"
     POST: str = "post"
@@ -15,6 +17,8 @@ class _HTTPMethods(NamedTuple):
 
 
 class _HTTPResponseCodes(NamedTuple):
+    """Container class for HTTP response codes.
+    """
     # Informational.
     CONTINUE: int = 100
     SWITCHING_PROTOCOLS: int = 101
@@ -94,6 +98,7 @@ class _HTTPResponseCodes(NamedTuple):
 
 
 class _RequestsKwargs(NamedTuple):
+    """Container class for the kwargs accepted by ``requests``"""
     params: str = "params"
     data: str = "data"
     json: str = "json"
@@ -114,4 +119,6 @@ HTTPResponseCodes = _HTTPResponseCodes()
 
 
 class null:
+    """Class for indicating when no value was passed when ``None`` is a possible valid value.
+    """
     pass

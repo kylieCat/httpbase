@@ -3,10 +3,10 @@
 
 # You can set these variables from the command line.
 SPHINXOPTS    =
-SPHINXBUILD   = sphinx-build
+SPHINXBUILD   = ~/.virtualenvs/httpbase/bin/sphinx-build
 SPHINXPROJ    = httpbase
-SOURCEDIR     = source
-BUILDDIR      = build
+SOURCEDIR     = ./docs
+BUILDDIR      = ./docs/_build
 
 # Put it first so that "make" without argument is like "make help".
 help:

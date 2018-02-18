@@ -20,21 +20,67 @@ def _get_error_response(code: int, message: str) -> requests.Response:
 
 
 class HTTPBaseClient(object):
-    """
-    Base class for creating HTTP clients. Handles getting URL's from ```Route`` objects, parsing kwargs, injecting
-    headers, and does the work of actually sending the request. Some of these can be overridden to extend functionality
-    as required:
+    """Base class for HTTP clients.
+
+    Subclass this to provide a solid base for HTTP client classes. Handles getting URL's from ```Route`` objects,
+    parsing kwargs, injecting headers, and does the work of actually sending the request. Some of these can be
+    overridden to extend functionality as required. However in the most basic of cases you'll only have to subclass this
+    class, and call ``_make_request(Route, **kwargs)``.
+
+    The most basic use case of making a ``GET`` request to an unauthenticated API might look like::
+
+        class TemperatureAPIClient(HTTPBaseClient):
+            _baseurl = "http://temperature.com
+
+            def get_temperature(self, zip_code):
+                return self._make_request(
+                    Route("/temperatures/{zip_code}", HTTPMethods.GET),
+                    zip_code=zip_code
+                )
+
+
+    In a simple example like the one above you may not even need to create any ``Resource`` classes. A more complete
+    might be::
+
+        class TemperatureDataResource(Resource):
+            temperature = FloatField(label="temp")
+            zip_code = StrField(validator=max_length_is_six)
+
+
+        class TemperatureAPIClient(HTTPBaseClient):
+            baseurl = "http://temperature.com
+
+            def get_temperature(self, zip_code):
+                return self._make_request(
+                    Route("/temperatures/{zip_code}",
+                    HTTPMethods.GET),
+                    zip_code=zip_code
+                )
+
+            def post_temperature_data(self, temp_data):
+                return self._make_request(
+                    Route("/temperature",
+                    HTTPMethods.POST),
+                    data=temp_data.json()
+                )
 
     Methods:
-         __init__(str) -> HTTPBaseClient
+         __init__(*list, **dict) -> HTTPBaseClient
          _inject_headers(dict[str, str]) -> dict
-         _is_requets_kwarg(str) -> bool
+         _is_requests_kwarg(str) -> bool
          _strip_route_kwargs(dict) -> dict
          _prep_request(**dict) -> dict
          _make_request(Route, **dict) -> requests.Response
     """
-    def __init__(self, baseurl: str, *args, **kwargs):
-        self.baseurl = baseurl
+    baseurl = None
+
+    def __init__(self, *args, **kwargs):
+        self.baseurl = kwargs.get("baseurl", self.baseurl)
+
+        if self.baseurl is None:
+            raise ConfigurationError(
+                "'baseurl' must be provided as a class attribute or as a keyword argument to __init__"
+            )
 
     ConfigurationError = ConfigurationError
 
@@ -86,7 +132,7 @@ class HTTPBaseClient(object):
 
     def _make_request(self, route: Route, **kwargs) -> requests.Response:
         """
-        This method does a few things:
+        This method does a few things
             - Separates kwargs meant for the underlying ``requests`` framework from kwargs
               we care about (query params and URL templating variables).
             - Injects required headers (auth and content type).
@@ -97,26 +143,23 @@ class HTTPBaseClient(object):
             route: The route for the request. Contains the path, HTTP method, template variable names for the URL and
                 accepted query params.
 
-            **kwargs: Takes several optional kwargs to build the request, these should look familiar as they are the
-                kwargs that ``requests`` accepts:
-
-                params:  Dictionary or bytes to be sent in the query string for the request.
-                data:  Dictionary, bytes, or file-like object to send in the body of the request.
-                json:  json to send in the body of the request.
-                headers:  Dictionary of HTTP Headers to send with the
-                cookies:  Dict or CookieJar object to send with the
-                files:  Dictionary of ``'filename': file-like-objects`` for multipart encoding upload.
-                auth:  Auth tuple or callable to enable Basic/Digest/Custom HTTP Auth.
-                timeout:  How long to wait for the server to send data before giving up, as a float, or a
-                    `(connect timeout, read timeout) <timeouts>` tuple.
-                allow_redirects:  Set to True by default.
-                proxies:  Dictionary mapping protocol or protocol and hostname to the URL of the proxy.
-                stream:  whether to immediately download the response content. Defaults to ``False``.
-                verify:  Either a boolean, in which case it controls whether we verify the server's TLS certificate,
-                    or a string, in which case it must be a path to a CA bundle to use. Defaults to ``True``.
-                cert:  if String, path to ssl client cert file (.pem). If Tuple, ('cert', 'key') pair.
-
-                As well as any additional kwargs your client specific client methods might need.
+        Keyword Args:
+            params:  Dictionary or bytes to be sent in the query string for the request.
+            data:  Dictionary, bytes, or file-like object to send in the body of the request.
+            json:  json to send in the body of the request.
+            headers:  Dictionary of HTTP Headers to send with the
+            cookies:  Dict or CookieJar object to send with the
+            files:  Dictionary of ``'filename': file-like-objects`` for multipart encoding upload.
+            auth:  Auth tuple or callable to enable Basic/Digest/Custom HTTP Auth.
+            timeout:  How long to wait for the server to send data before giving up, as a float, or a
+                `(connect timeout, read timeout) <timeouts>` tuple.
+            allow_redirects:  Set to True by default.
+            proxies:  Dictionary mapping protocol or protocol and hostname to the URL of the proxy.
+            stream:  whether to immediately download the response content. Defaults to ``False``.
+            verify:  Either a boolean, in which case it controls whether we verify the server's TLS certificate,
+                or a string, in which case it must be a path to a CA bundle to use. Defaults to ``True``.
+            cert:  if String, path to ssl client cert file (.pem). If Tuple, ('cert', 'key') pair.
+            kwargs: any additional kwargs your client specific client methods might need.
         """
         req_kwargs = self._prep_request(**kwargs)
         try:

@@ -1,11 +1,11 @@
 import re
-from typing import NamedTuple, Set
 from urllib import parse
 
+from .constants import TEMPLATE_VARIABLE_PATTERN
 from .exceptions import RouteError
 
 
-REGEX = re.compile(r"{(\w+)}")
+REGEX = re.compile(TEMPLATE_VARIABLE_PATTERN)
 
 
 class Route(object):
@@ -23,6 +23,15 @@ class Route(object):
         self.params = params
 
     def get_url(self, baseurl: str, **params):
+        """
+
+        Args:
+            baseurl:
+            **params:
+
+        Raises:
+            RouteError
+        """
         if not all((var in params for var in self.vars)):
             raise RouteError("missing required template variables for route: {}".format(self.vars))
         return parse.urljoin(baseurl, self.path.format(**params))

@@ -52,15 +52,13 @@ class HTTPBaseClient(object):
 
             def get_temperature(self, zip_code):
                 return self._make_request(
-                    Route("/temperatures/{zip_code}",
-                    HTTPMethods.GET),
+                    Route("/temperatures/{zip_code}", HTTPMethods.GET),
                     zip_code=zip_code
                 )
 
             def post_temperature_data(self, temp_data):
                 return self._make_request(
-                    Route("/temperature",
-                    HTTPMethods.POST),
+                    Route("/temperature", HTTPMethods.POST),
                     data=temp_data.json()
                 )
 

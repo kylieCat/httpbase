@@ -5,8 +5,8 @@
 SPHINXOPTS    =
 SPHINXBUILD   = ~/.virtualenvs/httpbase/bin/sphinx-build
 SPHINXPROJ    = httpbase
-SOURCEDIR     = ./docs
-BUILDDIR      = ./docs/_build
+SOURCEDIR     = ./source
+BUILDDIR      = .
 
 # Put it first so that "make" without argument is like "make help".
 help:

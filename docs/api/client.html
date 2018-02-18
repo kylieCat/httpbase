@@ -1,0 +1,462 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>httpbase.client &mdash; httpbase  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="httpbase  documentation" href="../index.html"/>
+        <link rel="up" title="API Documentation" href="index.html"/>
+        <link rel="next" title="httpbase.constants" href="constants.html"/>
+        <link rel="prev" title="API Documentation" href="index.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> httpbase
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/index.html">Getting Started</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">API Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#"><code class="docutils literal notranslate"><span class="pre">httpbase.client</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#module-httpbase.client">Base Class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#helper-functions">Helper Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="constants.html"><code class="docutils literal notranslate"><span class="pre">httpbase.constants</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="exceptions.html"><code class="docutils literal notranslate"><span class="pre">httpbase.exceptions</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="fields.html"><code class="docutils literal notranslate"><span class="pre">httpbase.fields</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="resources.html"><code class="docutils literal notranslate"><span class="pre">httpbase.resources</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="routes.html"><code class="docutils literal notranslate"><span class="pre">httpbase.routes</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">httpbase</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">API Documentation</a> &raquo;</li>
+        
+      <li><code class="docutils literal notranslate"><span class="pre">httpbase.client</span></code></li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/api/client.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="httpbase-client">
+<span id="client-module"></span><h1><a class="reference internal" href="#module-httpbase.client" title="httpbase.client"><code class="xref py py-mod docutils literal notranslate"><span class="pre">httpbase.client</span></code></a><a class="headerlink" href="#httpbase-client" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-httpbase.client">
+<span id="base-class"></span><h2>Base Class<a class="headerlink" href="#module-httpbase.client" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="httpbase.client.HTTPBaseClient">
+<em class="property">class </em><code class="descclassname">httpbase.client.</code><code class="descname">HTTPBaseClient</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/httpbase/client.html#HTTPBaseClient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#httpbase.client.HTTPBaseClient" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base class for HTTP clients.</p>
+<p>Subclass this to provide a solid base for HTTP client classes. Handles getting URL’s from <code class="docutils literal notranslate"><span class="pre">`Route</span></code> objects,
+parsing kwargs, injecting headers, and does the work of actually sending the request. Some of these can be
+overridden to extend functionality as required. However in the most basic of cases you’ll only have to subclass this
+class, and call <code class="docutils literal notranslate"><span class="pre">_make_request(Route,</span> <span class="pre">**kwargs)</span></code>.</p>
+<p>The most basic use case of making a <code class="docutils literal notranslate"><span class="pre">GET</span></code> request to an unauthenticated API might look like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">TemperatureAPIClient</span><span class="p">(</span><span class="n">HTTPBaseClient</span><span class="p">):</span>
+    <span class="n">_baseurl</span> <span class="o">=</span> <span class="s2">&quot;http://temperature.com</span>
+
+    <span class="k">def</span> <span class="nf">get_temperature</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">zip_code</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_request</span><span class="p">(</span>
+            <span class="n">Route</span><span class="p">(</span><span class="s2">&quot;/temperatures/</span><span class="si">{zip_code}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">HTTPMethods</span><span class="o">.</span><span class="n">GET</span><span class="p">),</span>
+            <span class="n">zip_code</span><span class="o">=</span><span class="n">zip_code</span>
+        <span class="p">)</span>
+</pre></div>
+</div>
+<p>In a simple example like the one above you may not even need to create any <code class="docutils literal notranslate"><span class="pre">Resource</span></code> classes. A more complete
+might be:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">TemperatureDataResource</span><span class="p">(</span><span class="n">Resource</span><span class="p">):</span>
+    <span class="n">temperature</span> <span class="o">=</span> <span class="n">FloatField</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;temp&quot;</span><span class="p">)</span>
+    <span class="n">zip_code</span> <span class="o">=</span> <span class="n">StrField</span><span class="p">(</span><span class="n">validator</span><span class="o">=</span><span class="n">max_length_is_six</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">TemperatureAPIClient</span><span class="p">(</span><span class="n">HTTPBaseClient</span><span class="p">):</span>
+    <span class="n">baseurl</span> <span class="o">=</span> <span class="s2">&quot;http://temperature.com</span>
+
+    <span class="k">def</span> <span class="nf">get_temperature</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">zip_code</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_request</span><span class="p">(</span>
+            <span class="n">Route</span><span class="p">(</span><span class="s2">&quot;/temperatures/</span><span class="si">{zip_code}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">HTTPMethods</span><span class="o">.</span><span class="n">GET</span><span class="p">),</span>
+            <span class="n">zip_code</span><span class="o">=</span><span class="n">zip_code</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">post_temperature_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">temp_data</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_request</span><span class="p">(</span>
+            <span class="n">Route</span><span class="p">(</span><span class="s2">&quot;/temperature&quot;</span><span class="p">,</span> <span class="n">HTTPMethods</span><span class="o">.</span><span class="n">POST</span><span class="p">),</span>
+            <span class="n">data</span><span class="o">=</span><span class="n">temp_data</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+        <span class="p">)</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="httpbase.client.HTTPBaseClient.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>*list</em>, <em>**dict</em><span class="sig-paren">)</span> &#x2192; HTTPBaseClient<a class="reference internal" href="../_modules/httpbase/client.html#HTTPBaseClient.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#httpbase.client.HTTPBaseClient.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="httpbase.client.HTTPBaseClient._inject_headers">
+<code class="descname">_inject_headers</code><span class="sig-paren">(</span><em>dict[str, str]</em><span class="sig-paren">)</span> &#x2192; dict<a class="reference internal" href="../_modules/httpbase/client.html#HTTPBaseClient._inject_headers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#httpbase.client.HTTPBaseClient._inject_headers" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="httpbase.client.HTTPBaseClient._is_requests_kwarg">
+<code class="descname">_is_requests_kwarg</code><span class="sig-paren">(</span><em>str</em><span class="sig-paren">)</span> &#x2192; bool<a class="reference internal" href="../_modules/httpbase/client.html#HTTPBaseClient._is_requests_kwarg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#httpbase.client.HTTPBaseClient._is_requests_kwarg" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="httpbase.client.HTTPBaseClient._strip_route_kwargs">
+<code class="descname">_strip_route_kwargs</code><span class="sig-paren">(</span><em>dict</em><span class="sig-paren">)</span> &#x2192; dict<a class="reference internal" href="../_modules/httpbase/client.html#HTTPBaseClient._strip_route_kwargs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#httpbase.client.HTTPBaseClient._strip_route_kwargs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="httpbase.client.HTTPBaseClient._prep_request">
+<code class="descname">_prep_request</code><span class="sig-paren">(</span><em>**dict</em><span class="sig-paren">)</span> &#x2192; dict<a class="reference internal" href="../_modules/httpbase/client.html#HTTPBaseClient._prep_request"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#httpbase.client.HTTPBaseClient._prep_request" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="httpbase.client.HTTPBaseClient._make_request">
+<code class="descname">_make_request</code><span class="sig-paren">(</span><em>Route</em>, <em>**dict</em><span class="sig-paren">)</span> &#x2192; requests.Response<a class="reference internal" href="../_modules/httpbase/client.html#HTTPBaseClient._make_request"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#httpbase.client.HTTPBaseClient._make_request" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="exception">
+<dt id="httpbase.client.HTTPBaseClient.ConfigurationError">
+<em class="property">exception </em><code class="descname">ConfigurationError</code><a class="headerlink" href="#httpbase.client.HTTPBaseClient.ConfigurationError" title="Permalink to this definition">¶</a></dt>
+<dd><p>This error is used to indicate an error with client configuration. A missing base URL, missing API keys, or
+incorrectly set or missing headers provided by consuming code.</p>
+<dl class="method">
+<dt id="httpbase.client.HTTPBaseClient.ConfigurationError.with_traceback">
+<code class="descname">with_traceback</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#httpbase.client.HTTPBaseClient.ConfigurationError.with_traceback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Exception.with_traceback(tb) –
+set self.__traceback__ to tb and return self.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">_inject_headers</code><span class="sig-paren">(</span><em>req_kwargs: dict</em><span class="sig-paren">)</span> &#x2192; dict<a class="reference internal" href="../_modules/httpbase/client.html#HTTPBaseClient._inject_headers"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Inject any additional headers users may not have added or shouldn’t need to know about. This method can and
+probably should be overridden. When overriding don’t forget to check for and update any existing headers. Don’t
+just blindly overwrite them.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>req_kwargs</strong> – A dictionary of kwargs with the route specific values removed. May contain a <code class="docutils literal notranslate"><span class="pre">headers</span></code> key
+already.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt>
+<em class="property">static </em><code class="descname">_is_requests_kwarg</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; bool<a class="reference internal" href="../_modules/httpbase/client.html#HTTPBaseClient._is_requests_kwarg"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Checks whether or not a given key belongs is one fo the kwargs <code class="docutils literal notranslate"><span class="pre">requests</span></code> accepts. This probably shouldn’t be
+overridden.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>key</strong> – A dictionary key. Will be checked against <code class="docutils literal notranslate"><span class="pre">constants._RequestsKwargs</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">_make_request</code><span class="sig-paren">(</span><em>route: httpbase.routes.Route</em>, <em>**kwargs</em><span class="sig-paren">)</span> &#x2192; requests.models.Response<a class="reference internal" href="../_modules/httpbase/client.html#HTTPBaseClient._make_request"><span class="viewcode-link">[source]</span></a></dt>
+<dd><dl class="docutils">
+<dt>This method does a few things</dt>
+<dd><ul class="first last simple">
+<li>Separates kwargs meant for the underlying <code class="docutils literal notranslate"><span class="pre">requests</span></code> framework from kwargs
+we care about (query params and URL templating variables).</li>
+<li>Injects required headers (auth and content type).</li>
+<li>Formats the full URL. Formats in things like resource ID’s and attaches query params.</li>
+<li>Finally sends request and returns the response.</li>
+</ul>
+</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>route</strong> – The route for the request. Contains the path, HTTP method, template variable names for the URL and
+accepted query params.</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Keyword Arguments:</th></tr>
+<tr class="field-even field"><td>&#160;</td><td class="field-body"><ul class="first last simple">
+<li><strong>params</strong> – Dictionary or bytes to be sent in the query string for the request.</li>
+<li><strong>data</strong> – Dictionary, bytes, or file-like object to send in the body of the request.</li>
+<li><strong>json</strong> – json to send in the body of the request.</li>
+<li><strong>headers</strong> – Dictionary of HTTP Headers to send with the</li>
+<li><strong>cookies</strong> – Dict or CookieJar object to send with the</li>
+<li><strong>files</strong> – Dictionary of <code class="docutils literal notranslate"><span class="pre">'filename':</span> <span class="pre">file-like-objects</span></code> for multipart encoding upload.</li>
+<li><strong>auth</strong> – Auth tuple or callable to enable Basic/Digest/Custom HTTP Auth.</li>
+<li><strong>timeout</strong> – How long to wait for the server to send data before giving up, as a float, or a
+<cite>(connect timeout, read timeout) &lt;timeouts&gt;</cite> tuple.</li>
+<li><strong>allow_redirects</strong> – Set to True by default.</li>
+<li><strong>proxies</strong> – Dictionary mapping protocol or protocol and hostname to the URL of the proxy.</li>
+<li><strong>stream</strong> – whether to immediately download the response content. Defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code>.</li>
+<li><strong>verify</strong> – Either a boolean, in which case it controls whether we verify the server’s TLS certificate,
+or a string, in which case it must be a path to a CA bundle to use. Defaults to <code class="docutils literal notranslate"><span class="pre">True</span></code>.</li>
+<li><strong>cert</strong> – if String, path to ssl client cert file (.pem). If Tuple, (‘cert’, ‘key’) pair.</li>
+<li><strong>kwargs</strong> – any additional kwargs your client specific client methods might need.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">_prep_request</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span> &#x2192; dict<a class="reference internal" href="../_modules/httpbase/client.html#HTTPBaseClient._prep_request"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Remove kwargs that <code class="docutils literal notranslate"><span class="pre">requests</span></code> will choke on and add any missing required headers.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>route</strong> – The <code class="docutils literal notranslate"><span class="pre">Route</span></code> corresponding to the request.</li>
+<li><strong>**kwargs</strong> – </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">_strip_route_kwargs</code><span class="sig-paren">(</span><em>kwargs: dict</em><span class="sig-paren">)</span> &#x2192; dict<a class="reference internal" href="../_modules/httpbase/client.html#HTTPBaseClient._strip_route_kwargs"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Removes kwargs that come from client methods. <code class="docutils literal notranslate"><span class="pre">requests</span></code> will choke on unexpected kwargs so this needs
+to be done. If this method is overridden it should still return a dictionary that can be consumed by
+<code class="docutils literal notranslate"><span class="pre">requests</span></code>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>kwargs</strong> – The kwargs form the client methods</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="helper-functions">
+<h2>Helper Functions<a class="headerlink" href="#helper-functions" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><dl class="function">
+<dt id="httpbase.client._get_error_response">
+<code class="descclassname">httpbase.client.</code><code class="descname">_get_error_response</code><span class="sig-paren">(</span><em>code: int</em>, <em>message: str</em><span class="sig-paren">)</span> &#x2192; requests.models.Response<a class="reference internal" href="../_modules/httpbase/client.html#_get_error_response"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#httpbase.client._get_error_response" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div></blockquote>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="constants.html" class="btn btn-neutral float-right" title="httpbase.constants" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="API Documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Ian Auld.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

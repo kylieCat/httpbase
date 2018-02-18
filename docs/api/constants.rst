@@ -1,10 +1,10 @@
-.. _exceptions_module:
+.. _constants_module:
 
 :mod:`httpbase.constants`
 --------------------------------
 
 Constants
-~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~
 
 Constants used within the library and suitable for use in packages that build on top of it.
 
@@ -16,7 +16,7 @@ Constants used within the library and suitable for use in packages that build on
 
   .. c:var:: TEMPLATE_VARIABLE_PATTERN
 
-    The regex pattern used to find template variables in :member:`~httpbase.routes.Route.vars`. Value: ``r"{(\w+)}"``
+    The regex pattern used to find template variables in :class:`~httpbase.routes.Route`. Value: ``r"{(\w+)}"``
 
   .. class:: HTTPMethods
 

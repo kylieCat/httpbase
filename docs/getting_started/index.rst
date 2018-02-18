@@ -6,7 +6,7 @@ Getting Started
 How to get started with ``httpbase``:
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
    :glob:
 
    *

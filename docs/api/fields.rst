@@ -6,11 +6,12 @@
 Fields
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-Exceptions that are raised by ``httpbase`` classes and methods.
+Fields are used to contain values. They are attached to :class:`~httpbase.resources.Resource` instances.
 
 .. automodule:: httpbase.fields
 
   .. autoclass:: Field
+     :members:
 
   .. autoclass:: IntField
 
@@ -19,6 +20,7 @@ Exceptions that are raised by ``httpbase`` classes and methods.
   .. autoclass:: BoolField
 
   .. autoclass:: ResourceField
+     :members:
 
   .. autoclass:: ListField
 

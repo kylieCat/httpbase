@@ -6,7 +6,7 @@ API Documentation
 Comprehensive reference material for every public API exposed by `httpbase`:
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
    :glob:
 
    *

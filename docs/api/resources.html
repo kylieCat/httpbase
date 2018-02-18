@@ -1,0 +1,572 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>httpbase.resources &mdash; httpbase  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="httpbase  documentation" href="../index.html"/>
+        <link rel="up" title="API Documentation" href="index.html"/>
+        <link rel="next" title="httpbase.routes" href="routes.html"/>
+        <link rel="prev" title="httpbase.fields" href="fields.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> httpbase
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/index.html">Getting Started</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">API Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="client.html"><code class="docutils literal notranslate"><span class="pre">httpbase.client</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="constants.html"><code class="docutils literal notranslate"><span class="pre">httpbase.constants</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="exceptions.html"><code class="docutils literal notranslate"><span class="pre">httpbase.exceptions</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="fields.html"><code class="docutils literal notranslate"><span class="pre">httpbase.fields</span></code></a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#"><code class="docutils literal notranslate"><span class="pre">httpbase.resources</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#module-httpbase.resources">Base Class</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="routes.html"><code class="docutils literal notranslate"><span class="pre">httpbase.routes</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">httpbase</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">API Documentation</a> &raquo;</li>
+        
+      <li><code class="docutils literal notranslate"><span class="pre">httpbase.resources</span></code></li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/api/resources.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="httpbase-resources">
+<span id="resources-module"></span><h1><a class="reference internal" href="#module-httpbase.resources" title="httpbase.resources"><code class="xref py py-mod docutils literal notranslate"><span class="pre">httpbase.resources</span></code></a><a class="headerlink" href="#httpbase-resources" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-httpbase.resources">
+<span id="base-class"></span><h2>Base Class<a class="headerlink" href="#module-httpbase.resources" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="httpbase.resources.ResourceMetaclass">
+<em class="property">class </em><code class="descclassname">httpbase.resources.</code><code class="descname">ResourceMetaclass</code><a class="reference internal" href="../_modules/httpbase/resources.html#ResourceMetaclass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#httpbase.resources.ResourceMetaclass" title="Permalink to this definition">¶</a></dt>
+<dd><p>Metaclass for <code class="docutils literal notranslate"><span class="pre">Resource</span></code> objects. When a class object is constructed at run time this will add any declared
+to a dictionary and set that dictionary as the value for <code class="docutils literal notranslate"><span class="pre">_declared_fields</span></code>. It will also go up the inheritance
+chain and add any fields from parent <code class="docutils literal notranslate"><span class="pre">Resources</span></code> as well.</p>
+<p>This is done so that class instances can make copies of the fields that are assigned to it so that instances of
+the <code class="docutils literal notranslate"><span class="pre">Resource</span></code> class don’t all share the same fields/values.</p>
+<dl class="method">
+<dt id="httpbase.resources.ResourceMetaclass.mro">
+<code class="descname">mro</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; list<a class="headerlink" href="#httpbase.resources.ResourceMetaclass.mro" title="Permalink to this definition">¶</a></dt>
+<dd><p>return a type’s method resolution order</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="httpbase.resources.Resource">
+<em class="property">class </em><code class="descclassname">httpbase.resources.</code><code class="descname">Resource</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/httpbase/resources.html#Resource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#httpbase.resources.Resource" title="Permalink to this definition">¶</a></dt>
+<dd><p>A class the represents a resource in an HTTP API. Subclasses of this class are composed of <code class="docutils literal notranslate"><span class="pre">Fields</span></code> which dictate
+how the value within that field will serialized. Resources can contain other resources.</p>
+<p>To deal with the nested nature of these resources this class has some special accessor methods to make traversing
+down deeply nested structures a bit more convenient. They are similar to the <code class="docutils literal notranslate"><span class="pre">get()</span></code> on dictionaries and work the
+same way when fetching a value on the parent resource. However they aso support a dotted syntax for traversing
+further down in to nested objects. For example if you had a post resource that had an author and the author had
+a profile that had an email you could access it like so:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">PostResource</span><span class="p">(</span><span class="n">Resource</span><span class="p">):</span>
+    <span class="n">author</span> <span class="o">=</span> <span class="n">ResourceField</span><span class="p">()</span>
+
+
+<span class="k">class</span> <span class="nc">AuthorResource</span><span class="p">(</span><span class="n">Resource</span><span class="p">):</span>
+    <span class="n">profile</span> <span class="o">=</span> <span class="n">ResourceField</span><span class="p">()</span>
+
+
+<span class="k">class</span> <span class="nc">ProfileResource</span><span class="p">(</span><span class="n">Resource</span><span class="p">):</span>
+    <span class="n">email</span> <span class="o">=</span> <span class="n">StrField</span><span class="p">()</span>
+
+<span class="n">post</span> <span class="o">=</span> <span class="n">PostResource</span><span class="p">(</span>
+    <span class="n">author</span><span class="o">=</span><span class="n">AuthorResource</span><span class="p">(</span><span class="n">profile</span><span class="o">=</span><span class="n">ProfileResource</span><span class="p">(</span><span class="n">email</span><span class="o">=</span><span class="s2">&quot;foo@example.com&quot;</span><span class="p">))</span>
+<span class="p">)</span>
+<span class="c1"># to get the value of the StrField ``email``</span>
+<span class="n">post</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="s2">&quot;author.profile.email&quot;</span><span class="p">)</span>
+
+<span class="c1"># to update the value</span>
+<span class="n">post</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="s2">&quot;author.profile.email&quot;</span><span class="p">,</span><span class="s2">&quot;new.email@example.com&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="exception">
+<dt id="httpbase.resources.Resource.SerializationError">
+<em class="property">exception </em><code class="descname">SerializationError</code><a class="headerlink" href="#httpbase.resources.Resource.SerializationError" title="Permalink to this definition">¶</a></dt>
+<dd><p>This error is used to indicate that an exception occurred during serialization of the fields on a resource.</p>
+<dl class="method">
+<dt id="httpbase.resources.Resource.SerializationError.with_traceback">
+<code class="descname">with_traceback</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#httpbase.resources.Resource.SerializationError.with_traceback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Exception.with_traceback(tb) –
+set self.__traceback__ to tb and return self.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="method">
+<dt id="httpbase.resources.Resource._traverse_fields">
+<code class="descname">_traverse_fields</code><span class="sig-paren">(</span><em>path: str</em><span class="sig-paren">)</span> &#x2192; httpbase.fields.Field<a class="reference internal" href="../_modules/httpbase/resources.html#Resource._traverse_fields"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#httpbase.resources.Resource._traverse_fields" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method for traversing fields given a dotted path.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> – A dot separated path down the <code class="docutils literal notranslate"><span class="pre">Resource</span></code> object.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Field</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="httpbase.resources.Resource.dict">
+<code class="descname">dict</code><span class="sig-paren">(</span><em>use_labels: bool = True</em><span class="sig-paren">)</span> &#x2192; Dict[str, Union[str, int, float, NoneType, typing.Mapping[str, _ForwardRef('JSON')], typing.List[_ForwardRef('JSON')]]]<a class="reference internal" href="../_modules/httpbase/resources.html#Resource.dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#httpbase.resources.Resource.dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a json serializable dictionary</p>
+<p>Returns a dictionary suitable for use with <cite>json.dumps()</cite>. Accepts a keyword argument, <code class="docutils literal notranslate"><span class="pre">use_labels</span></code>, that
+determines if the attribute name or the <code class="docutils literal notranslate"><span class="pre">label</span></code> attribute of the field should be used as the key in the
+resulting dictionary.</p>
+<p>This method will capture most expected exceptions raised during the serialization process and attach them to
+the instance, similar to forms in Django. This method is called by <a class="reference internal" href="#httpbase.resources.Resource.json" title="httpbase.resources.Resource.json"><code class="xref py py-func docutils literal notranslate"><span class="pre">json()</span></code></a>,
+if there are any errors on the instance JSON serialization will fail. If you are going to use this method
+directly ensure to check for errors prior to using it.</p>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">PostResource</span><span class="p">(</span><span class="n">Resource</span><span class="p">):</span>
+    <span class="n">author_name</span> <span class="o">=</span> <span class="n">StrField</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;authorName&quot;</span><span class="p">)</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="n">StrField</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;postTitle&quot;</span><span class="p">)</span>
+    <span class="n">body</span> <span class="o">=</span> <span class="n">StrField</span><span class="p">()</span>
+    <span class="n">date</span> <span class="o">=</span> <span class="n">DateField</span><span class="p">()</span>
+
+<span class="n">post</span> <span class="o">=</span> <span class="n">PostResource</span><span class="p">(</span>
+    <span class="n">author_name</span><span class="o">=</span><span class="s2">&quot;Author&quot;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Post Title&quot;</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="s2">&quot;...&quot;</span><span class="p">,</span> <span class="n">date</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+<span class="p">)</span>
+<span class="n">post</span><span class="o">.</span><span class="n">dict</span><span class="p">()</span>
+<span class="p">{</span><span class="s1">&#39;authorName&#39;</span><span class="p">:</span> <span class="s1">&#39;Author&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;body&#39;</span><span class="p">:</span> <span class="s1">&#39;...&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;date&#39;</span><span class="p">:</span> <span class="s1">&#39;2018-02-17 22:08:1518934108&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;postTitle&#39;</span><span class="p">:</span> <span class="s1">&#39;Post Title&#39;</span><span class="p">}</span>
+
+<span class="n">post</span><span class="o">.</span><span class="n">dict</span><span class="p">(</span><span class="n">use_labels</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="p">{</span><span class="s1">&#39;author_name&#39;</span><span class="p">:</span> <span class="s1">&#39;Author&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;body&#39;</span><span class="p">:</span> <span class="s1">&#39;...&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;date&#39;</span><span class="p">:</span> <span class="s1">&#39;2018-02-17 22:08:1518934108&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="s1">&#39;Post Title&#39;</span><span class="p">}</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">Keyword Arguments:</th></tr>
+<tr class="field-odd field"><td>&#160;</td><td class="field-body"><strong>use_labels</strong> – If set to <code class="docutils literal notranslate"><span class="pre">False</span></code> the resulting dictionary will use the attribute names of the fields as
+keys in the dictionary. If set to <code class="docutils literal notranslate"><span class="pre">True</span></code> the <code class="docutils literal notranslate"><span class="pre">label</span></code> attribute of the class will be used. This
+helpful if you want to write the serialized <code class="docutils literal notranslate"><span class="pre">Resource</span></code> to a file to loaded again later. That will
+allow use to use the <code class="docutils literal notranslate"><span class="pre">Resource(**dict)</span></code> syntax.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="httpbase.resources.Resource.errors">
+<code class="descname">errors</code><a class="headerlink" href="#httpbase.resources.Resource.errors" title="Permalink to this definition">¶</a></dt>
+<dd><p>A dictionary containing any errors encountered during serialization. Should be checked prior to suing the
+output of <code class="docutils literal notranslate"><span class="pre">dict()</span></code>. If this dictionary contains any errors <a class="reference internal" href="#httpbase.resources.Resource.json" title="httpbase.resources.Resource.json"><code class="xref py py-func docutils literal notranslate"><span class="pre">json()</span></code></a> will
+raise a <code class="docutils literal notranslate"><span class="pre">SerializationError</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="httpbase.resources.Resource.fields">
+<code class="descname">fields</code><a class="headerlink" href="#httpbase.resources.Resource.fields" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a dictionary where the keys are the attribute name for a field and the value is the <code class="docutils literal notranslate"><span class="pre">Field</span></code> object</p>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">PostResource</span><span class="p">(</span><span class="n">Resource</span><span class="p">):</span>
+    <span class="n">author_name</span> <span class="o">=</span> <span class="n">StrField</span><span class="p">()</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="n">StrField</span><span class="p">()</span>
+    <span class="n">body</span> <span class="o">=</span> <span class="n">StrField</span><span class="p">()</span>
+    <span class="n">date</span> <span class="o">=</span> <span class="n">DateField</span><span class="p">()</span>
+
+<span class="n">post</span> <span class="o">=</span> <span class="n">Post</span><span class="p">(</span><span class="n">author_name</span><span class="o">=</span><span class="s2">&quot;Author&quot;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Post Title&quot;</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="s2">&quot;...&quot;</span><span class="p">,</span> <span class="n">date</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">post</span><span class="o">.</span><span class="n">fields</span><span class="p">())</span>
+<span class="p">{</span><span class="s1">&#39;author_name&#39;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">StrField</span><span class="p">:</span> <span class="n">Author</span><span class="o">&gt;</span><span class="p">,</span>
+ <span class="s1">&#39;body&#39;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">StrField</span><span class="p">:</span> <span class="o">...&gt;</span><span class="p">,</span>
+ <span class="s1">&#39;date&#39;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">DateField</span><span class="p">:</span> <span class="mi">2018</span><span class="o">-</span><span class="mi">02</span><span class="o">-</span><span class="mi">17</span> <span class="mi">21</span><span class="p">:</span><span class="mi">53</span><span class="p">:</span><span class="mf">44.522987</span><span class="o">&gt;</span><span class="p">,</span>
+ <span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">StrField</span><span class="p">:</span> <span class="n">Post</span> <span class="n">Title</span><span class="o">&gt;</span><span class="p">}</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">dict[str, Field]</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="httpbase.resources.Resource.get_field">
+<code class="descname">get_field</code><span class="sig-paren">(</span><em>path: str</em><span class="sig-paren">)</span> &#x2192; httpbase.fields.Field<a class="reference internal" href="../_modules/httpbase/resources.html#Resource.get_field"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#httpbase.resources.Resource.get_field" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a dot separated path to a field will return the field at the end of the path.</p>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">post</span> <span class="o">=</span> <span class="n">PostResource</span><span class="p">(</span>
+    <span class="n">author</span><span class="o">=</span><span class="n">AuthorResource</span><span class="p">(</span><span class="n">profile</span><span class="o">=</span><span class="n">ProfileResource</span><span class="p">(</span><span class="n">email</span><span class="o">=</span><span class="s2">&quot;foo@example.com&quot;</span><span class="p">))</span>
+<span class="p">)</span>
+<span class="c1"># This would return the field of the ``email`` attribute on the ``ProfileResource``</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">post</span><span class="o">.</span><span class="n">get_field</span><span class="p">(</span><span class="s2">&quot;author.profile.email&quot;</span><span class="p">))</span>
+<span class="o">&lt;</span><span class="n">StrField</span><span class="p">:</span> <span class="n">foo</span><span class="nd">@example</span><span class="o">.</span><span class="n">com</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> – A dot separated path to a field.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Field</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="httpbase.resources.Resource.get_label">
+<code class="descname">get_label</code><span class="sig-paren">(</span><em>path: str</em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="../_modules/httpbase/resources.html#Resource.get_label"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#httpbase.resources.Resource.get_label" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the label for a given path.</p>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">post</span> <span class="o">=</span> <span class="n">PostResource</span><span class="p">(</span>
+    <span class="n">author</span><span class="o">=</span><span class="n">AuthorResource</span><span class="p">(</span><span class="n">profile</span><span class="o">=</span><span class="n">ProfileResource</span><span class="p">(</span><span class="n">email</span><span class="o">=</span><span class="s2">&quot;foo@example.com&quot;</span><span class="p">))</span>
+<span class="p">)</span>
+<span class="c1"># This would return the label of the ``email`` field on the ``ProfileResource``</span>
+<span class="n">post</span><span class="o">.</span><span class="n">get_label</span><span class="p">(</span><span class="s2">&quot;author.profile.email&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">post</span><span class="o">.</span><span class="n">get_label</span><span class="p">(</span><span class="s2">&quot;author.profile.email&quot;</span><span class="p">)</span>
+<span class="s2">&quot;email&quot;</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> – A dot separated path.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="httpbase.resources.Resource.get_value">
+<code class="descname">get_value</code><span class="sig-paren">(</span><em>path: str</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/httpbase/resources.html#Resource.get_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#httpbase.resources.Resource.get_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a dotted path return the value at the end of that path.</p>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">post</span> <span class="o">=</span> <span class="n">PostResource</span><span class="p">(</span>
+    <span class="n">author</span><span class="o">=</span><span class="n">AuthorResource</span><span class="p">(</span><span class="n">profile</span><span class="o">=</span><span class="n">ProfileResource</span><span class="p">(</span><span class="n">email</span><span class="o">=</span><span class="s2">&quot;foo@example.com&quot;</span><span class="p">))</span>
+<span class="p">)</span>
+<span class="c1"># This would return the value of the ``email`` field on the ``ProfileResource``</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">post</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="s2">&quot;author.profile.email&quot;</span><span class="p">))</span>
+<span class="s2">&quot;foo@example.com&quot;</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> – A dot separated path</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="httpbase.resources.Resource.json">
+<code class="descname">json</code><span class="sig-paren">(</span><em>use_labels: bool = True</em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="../_modules/httpbase/resources.html#Resource.json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#httpbase.resources.Resource.json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the JSON for an instance.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>use_labels</strong> – Boolean to determine whether or not the attr name or the label of the <code class="docutils literal notranslate"><span class="pre">Field</span></code> should be used.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference internal" href="#httpbase.resources.Resource.SerializationError" title="httpbase.resources.Resource.SerializationError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">SerializationError</span></code></a> – Raises a <code class="docutils literal notranslate"><span class="pre">SerializationError</span></code> if there are fields that aren’t JSON serializable.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="httpbase.resources.Resource.labels">
+<code class="descname">labels</code><span class="sig-paren">(</span><em>path: str = ''</em><span class="sig-paren">)</span> &#x2192; Iterator[str]<a class="reference internal" href="../_modules/httpbase/resources.html#Resource.labels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#httpbase.resources.Resource.labels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Yields all the labels for the given resource. If a dotted path is given it will return the labels for the
+resource at the end of that path.</p>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">PostResource</span><span class="p">(</span><span class="n">Resource</span><span class="p">):</span>
+    <span class="n">author</span> <span class="o">=</span> <span class="n">ResourceField</span><span class="p">()</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="n">StrField</span><span class="p">()</span>
+    <span class="n">body</span> <span class="o">=</span> <span class="n">StrField</span><span class="p">()</span>
+    <span class="n">date</span> <span class="o">=</span> <span class="n">DateField</span><span class="p">()</span>
+
+<span class="k">class</span> <span class="nc">AuthorResource</span><span class="p">(</span><span class="n">Resource</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">StrField</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;authorName&quot;</span><span class="p">)</span>
+    <span class="n">post_count</span> <span class="o">=</span> <span class="n">IntField</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;postCount&quot;</span><span class="p">)</span>
+    <span class="n">avatar</span> <span class="o">=</span> <span class="n">StrField</span><span class="p">()</span>
+
+<span class="n">author</span> <span class="o">=</span> <span class="n">AuthorResource</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;author&quot;</span><span class="p">,</span> <span class="n">post_count</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">avatar</span><span class="o">=</span><span class="s2">&quot;...&quot;</span><span class="p">)</span>
+<span class="n">post</span> <span class="o">=</span> <span class="n">PostResource</span><span class="p">(</span>
+    <span class="n">author</span><span class="o">=</span><span class="n">author</span><span class="p">,</span>
+    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Post Title&quot;</span><span class="p">,</span>
+    <span class="n">body</span><span class="o">=</span><span class="s2">&quot;...&quot;</span><span class="p">,</span>
+    <span class="n">date</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span>
+<span class="p">)</span>
+<span class="c1"># This would yield the labels of the ``PostResource``</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">post</span><span class="o">.</span><span class="n">labels</span><span class="p">()))</span>
+<span class="p">[</span><span class="s1">&#39;author&#39;</span><span class="p">,</span> <span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;body&#39;</span><span class="p">,</span> <span class="s1">&#39;date&#39;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">post</span><span class="o">.</span><span class="n">labels</span><span class="p">(</span><span class="s2">&quot;author&quot;</span><span class="p">)))</span>
+<span class="p">[</span><span class="s1">&#39;authorName&#39;</span><span class="p">,</span> <span class="s1">&#39;postCount&#39;</span><span class="p">,</span> <span class="s1">&#39;avatar&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> – A dot separated path</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Yields:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="httpbase.resources.Resource.update">
+<code class="descname">update</code><span class="sig-paren">(</span><em>path: str</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/httpbase/resources.html#Resource.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#httpbase.resources.Resource.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the value at given path.</p>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">post</span> <span class="o">=</span> <span class="n">PostResource</span><span class="p">(</span>
+    <span class="n">author</span><span class="o">=</span><span class="n">AuthorResource</span><span class="p">(</span><span class="n">profile</span><span class="o">=</span><span class="n">ProfileResource</span><span class="p">(</span><span class="n">email</span><span class="o">=</span><span class="s2">&quot;foo@example.com&quot;</span><span class="p">))</span>
+<span class="p">)</span>
+<span class="c1"># This would update the value of the ``email`` field on the ``ProfileResource``</span>
+<span class="n">post</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="s2">&quot;author.profile.email&quot;</span><span class="p">,</span> <span class="s2">&quot;new.email@example.com&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">post</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="s2">&quot;author.profile.email&quot;</span><span class="p">)</span>
+<span class="s2">&quot;new.email@example.com&quot;</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>path</strong> – A dot separated path</li>
+<li><strong>value</strong> – A new value</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="routes.html" class="btn btn-neutral float-right" title="httpbase.routes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="fields.html" class="btn btn-neutral" title="httpbase.fields" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Ian Auld.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

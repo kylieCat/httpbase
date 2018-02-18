@@ -1,0 +1,388 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>httpbase.client &mdash; httpbase  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="httpbase  documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> httpbase
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started/index.html">Getting Started</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../api/index.html">API Documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">httpbase</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>httpbase.client</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for httpbase.client</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">json</span>
+
+<span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="kn">from</span> <span class="nn">.constants</span> <span class="k">import</span> <span class="n">HTTPResponseCodes</span><span class="p">,</span> <span class="n">_RequestsKwargs</span>
+<span class="kn">from</span> <span class="nn">.exceptions</span> <span class="k">import</span> <span class="n">ConfigurationError</span><span class="p">,</span> <span class="n">RouteError</span>
+<span class="kn">from</span> <span class="nn">.routes</span> <span class="k">import</span> <span class="n">Route</span>
+
+
+<span class="n">_request_kwargs</span> <span class="o">=</span> <span class="n">_RequestsKwargs</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="_get_error_response"><a class="viewcode-back" href="../../api/client.html#httpbase.client._get_error_response">[docs]</a><span class="k">def</span> <span class="nf">_get_error_response</span><span class="p">(</span><span class="n">code</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">requests</span><span class="o">.</span><span class="n">Response</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;&quot;&quot;&quot;</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">Response</span><span class="p">()</span>
+    <span class="n">resp</span><span class="o">.</span><span class="n">status_code</span> <span class="o">=</span> <span class="n">code</span>
+    <span class="n">resp</span><span class="o">.</span><span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Content-Type&quot;</span><span class="p">:</span> <span class="s2">&quot;application/json&quot;</span><span class="p">}</span>
+    <span class="n">resp</span><span class="o">.</span><span class="n">_content</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;error making request: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">message</span><span class="p">)})</span><span class="o">.</span><span class="n">encode</span><span class="p">()</span></div>
+    <span class="k">return</span> <span class="n">resp</span>
+
+
+<div class="viewcode-block" id="HTTPBaseClient"><a class="viewcode-back" href="../../api/client.html#httpbase.client.HTTPBaseClient">[docs]</a><span class="k">class</span> <span class="nc">HTTPBaseClient</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Base class for HTTP clients.</span>
+
+<span class="sd">    Subclass this to provide a solid base for HTTP client classes. Handles getting URL&#39;s from ```Route`` objects,</span>
+<span class="sd">    parsing kwargs, injecting headers, and does the work of actually sending the request. Some of these can be</span>
+<span class="sd">    overridden to extend functionality as required. However in the most basic of cases you&#39;ll only have to subclass this</span>
+<span class="sd">    class, and call ``_make_request(Route, **kwargs)``.</span>
+
+<span class="sd">    The most basic use case of making a ``GET`` request to an unauthenticated API might look like::</span>
+
+<span class="sd">        class TemperatureAPIClient(HTTPBaseClient):</span>
+<span class="sd">            _baseurl = &quot;http://temperature.com</span>
+
+<span class="sd">            def get_temperature(self, zip_code):</span>
+<span class="sd">                return self._make_request(</span>
+<span class="sd">                    Route(&quot;/temperatures/{zip_code}&quot;, HTTPMethods.GET),</span>
+<span class="sd">                    zip_code=zip_code</span>
+<span class="sd">                )</span>
+
+
+<span class="sd">    In a simple example like the one above you may not even need to create any ``Resource`` classes. A more complete</span>
+<span class="sd">    might be::</span>
+
+<span class="sd">        class TemperatureDataResource(Resource):</span>
+<span class="sd">            temperature = FloatField(label=&quot;temp&quot;)</span>
+<span class="sd">            zip_code = StrField(validator=max_length_is_six)</span>
+
+
+<span class="sd">        class TemperatureAPIClient(HTTPBaseClient):</span>
+<span class="sd">            baseurl = &quot;http://temperature.com</span>
+
+<span class="sd">            def get_temperature(self, zip_code):</span>
+<span class="sd">                return self._make_request(</span>
+<span class="sd">                    Route(&quot;/temperatures/{zip_code}&quot;, HTTPMethods.GET),</span>
+<span class="sd">                    zip_code=zip_code</span>
+<span class="sd">                )</span>
+
+<span class="sd">            def post_temperature_data(self, temp_data):</span>
+<span class="sd">                return self._make_request(</span>
+<span class="sd">                    Route(&quot;/temperature&quot;, HTTPMethods.POST),</span>
+<span class="sd">                    data=temp_data.json()</span>
+<span class="sd">                )</span>
+
+<span class="sd">    Methods:</span>
+<span class="sd">         __init__(*list, **dict) -&gt; HTTPBaseClient</span>
+<span class="sd">         _inject_headers(dict[str, str]) -&gt; dict</span>
+<span class="sd">         _is_requests_kwarg(str) -&gt; bool</span>
+<span class="sd">         _strip_route_kwargs(dict) -&gt; dict</span>
+<span class="sd">         _prep_request(**dict) -&gt; dict</span>
+<span class="sd">         _make_request(Route, **dict) -&gt; requests.Response</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">baseurl</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="HTTPBaseClient.__init__"><a class="viewcode-back" href="../../api/client.html#httpbase.client.HTTPBaseClient.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">baseurl</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;baseurl&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">baseurl</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">baseurl</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ConfigurationError</span><span class="p">(</span>
+                <span class="s2">&quot;&#39;baseurl&#39; must be provided as a class attribute or as a keyword argument to __init__&quot;</span></div>
+            <span class="p">)</span>
+
+    <span class="n">ConfigurationError</span> <span class="o">=</span> <span class="n">ConfigurationError</span>
+
+<div class="viewcode-block" id="HTTPBaseClient._inject_headers"><a class="viewcode-back" href="../../api/client.html#httpbase.client.HTTPBaseClient._inject_headers">[docs]</a>    <span class="k">def</span> <span class="nf">_inject_headers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">req_kwargs</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Inject any additional headers users may not have added or shouldn&#39;t need to know about. This method can and</span>
+<span class="sd">        probably should be overridden. When overriding don&#39;t forget to check for and update any existing headers. Don&#39;t</span>
+<span class="sd">        just blindly overwrite them.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            req_kwargs: A dictionary of kwargs with the route specific values removed. May contain a ``headers`` key</span>
+<span class="sd">                already.</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+        <span class="k">return</span> <span class="n">req_kwargs</span>
+
+<div class="viewcode-block" id="HTTPBaseClient._is_requests_kwarg"><a class="viewcode-back" href="../../api/client.html#httpbase.client.HTTPBaseClient._is_requests_kwarg">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_is_requests_kwarg</span><span class="p">(</span><span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Checks whether or not a given key belongs is one fo the kwargs ``requests`` accepts. This probably shouldn&#39;t be</span>
+<span class="sd">        overridden.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            key: A dictionary key. Will be checked against ``constants._RequestsKwargs``</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+        <span class="k">return</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">_request_kwargs</span>
+
+<div class="viewcode-block" id="HTTPBaseClient._strip_route_kwargs"><a class="viewcode-back" href="../../api/client.html#httpbase.client.HTTPBaseClient._strip_route_kwargs">[docs]</a>    <span class="k">def</span> <span class="nf">_strip_route_kwargs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Removes kwargs that come from client methods. ``requests`` will choke on unexpected kwargs so this needs</span>
+<span class="sd">        to be done. If this method is overridden it should still return a dictionary that can be consumed by</span>
+<span class="sd">        ``requests``.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            kwargs: The kwargs form the client methods</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+        <span class="k">return</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">value</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_requests_kwarg</span><span class="p">(</span><span class="n">key</span><span class="p">)}</span>
+
+<div class="viewcode-block" id="HTTPBaseClient._prep_request"><a class="viewcode-back" href="../../api/client.html#httpbase.client.HTTPBaseClient._prep_request">[docs]</a>    <span class="k">def</span> <span class="nf">_prep_request</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Remove kwargs that ``requests`` will choke on and add any missing required headers.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            route: The ``Route`` corresponding to the request.</span>
+<span class="sd">            **kwargs:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">req_kwargs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_strip_route_kwargs</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">req_kwargs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_inject_headers</span><span class="p">(</span><span class="n">req_kwargs</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">req_kwargs</span>
+
+<div class="viewcode-block" id="HTTPBaseClient._make_request"><a class="viewcode-back" href="../../api/client.html#httpbase.client.HTTPBaseClient._make_request">[docs]</a>    <span class="k">def</span> <span class="nf">_make_request</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">route</span><span class="p">:</span> <span class="n">Route</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">requests</span><span class="o">.</span><span class="n">Response</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method does a few things</span>
+<span class="sd">            - Separates kwargs meant for the underlying ``requests`` framework from kwargs</span>
+<span class="sd">              we care about (query params and URL templating variables).</span>
+<span class="sd">            - Injects required headers (auth and content type).</span>
+<span class="sd">            - Formats the full URL. Formats in things like resource ID&#39;s and attaches query params.</span>
+<span class="sd">            - Finally sends request and returns the response.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            route: The route for the request. Contains the path, HTTP method, template variable names for the URL and</span>
+<span class="sd">                accepted query params.</span>
+
+<span class="sd">        Keyword Args:</span>
+<span class="sd">            params:  Dictionary or bytes to be sent in the query string for the request.</span>
+<span class="sd">            data:  Dictionary, bytes, or file-like object to send in the body of the request.</span>
+<span class="sd">            json:  json to send in the body of the request.</span>
+<span class="sd">            headers:  Dictionary of HTTP Headers to send with the</span>
+<span class="sd">            cookies:  Dict or CookieJar object to send with the</span>
+<span class="sd">            files:  Dictionary of ``&#39;filename&#39;: file-like-objects`` for multipart encoding upload.</span>
+<span class="sd">            auth:  Auth tuple or callable to enable Basic/Digest/Custom HTTP Auth.</span>
+<span class="sd">            timeout:  How long to wait for the server to send data before giving up, as a float, or a</span>
+<span class="sd">                `(connect timeout, read timeout) &lt;timeouts&gt;` tuple.</span>
+<span class="sd">            allow_redirects:  Set to True by default.</span>
+<span class="sd">            proxies:  Dictionary mapping protocol or protocol and hostname to the URL of the proxy.</span>
+<span class="sd">            stream:  whether to immediately download the response content. Defaults to ``False``.</span>
+<span class="sd">            verify:  Either a boolean, in which case it controls whether we verify the server&#39;s TLS certificate,</span>
+<span class="sd">                or a string, in which case it must be a path to a CA bundle to use. Defaults to ``True``.</span>
+<span class="sd">            cert:  if String, path to ssl client cert file (.pem). If Tuple, (&#39;cert&#39;, &#39;key&#39;) pair.</span>
+<span class="sd">            kwargs: any additional kwargs your client specific client methods might need.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">req_kwargs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prep_request</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">url</span> <span class="o">=</span> <span class="n">route</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">baseurl</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">requests</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">route</span><span class="o">.</span><span class="n">method</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="o">**</span><span class="n">req_kwargs</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">RouteError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span></div></div>
+            <span class="k">return</span> <span class="n">_get_error_response</span><span class="p">(</span><span class="n">HTTPResponseCodes</span><span class="o">.</span><span class="n">BAD_REQUEST</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">err</span><span class="p">))</span>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Ian Auld.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

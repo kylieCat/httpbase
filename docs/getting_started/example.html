@@ -1,0 +1,331 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Example Client &mdash; httpbase  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="httpbase  documentation" href="../index.html"/>
+        <link rel="up" title="Getting Started" href="index.html"/>
+        <link rel="next" title="Installation" href="installation.html"/>
+        <link rel="prev" title="Getting Started" href="index.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> httpbase
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Getting Started</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Example Client</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html">Installation</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api/index.html">API Documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">httpbase</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Getting Started</a> &raquo;</li>
+        
+      <li>Example Client</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/getting_started/example.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="example-client">
+<span id="example"></span><h1>Example Client<a class="headerlink" href="#example-client" title="Permalink to this headline">¶</a></h1>
+<p>Using the  API provided by <a class="reference external" href="https://jsonplaceholder.typicode.com/">JSONPlaceholder</a> here is a small example client demonstrating some of the core concepts of
+<code class="docutils literal notranslate"><span class="pre">httpbase</span></code>.</p>
+<p>This example is runnable once <code class="docutils literal notranslate"><span class="pre">httpbase</span></code> is installed. Note that the API provided by JSONPlaceholder doesn’t actually
+store posted data so you won’t be able to get your new post back. You will know it is working however by the status
+code of the response.</p>
+<p><a class="reference download internal" href="../_downloads/example.py" download=""><code class="xref download docutils literal notranslate"><span class="pre">Download</span></code></a></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">NamedTuple</span>
+
+<span class="kn">from</span> <span class="nn">httpbase</span> <span class="k">import</span> <span class="n">Response</span>
+<span class="kn">from</span> <span class="nn">httpbase.client</span> <span class="k">import</span> <span class="n">HTTPBaseClient</span>
+<span class="kn">from</span> <span class="nn">httpbase.constants</span> <span class="k">import</span> <span class="n">HTTPResponseCodes</span><span class="p">,</span> <span class="n">HTTPMethods</span>
+<span class="kn">from</span> <span class="nn">httpbase.fields</span> <span class="k">import</span> <span class="n">IntField</span><span class="p">,</span> <span class="n">StrField</span>
+<span class="kn">from</span> <span class="nn">httpbase.resources</span> <span class="k">import</span> <span class="n">Resource</span>
+<span class="kn">from</span> <span class="nn">httpbase.routes</span> <span class="k">import</span> <span class="n">Route</span>
+
+
+<span class="k">def</span> <span class="nf">title_max_length</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">50</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;title too long&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">Post</span><span class="p">(</span><span class="n">Resource</span><span class="p">):</span>
+    <span class="c1"># This field can be null.</span>
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">IntField</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="c1"># Sometimes the Pythonic naming conventions won&#39;t match with the service you are calling.</span>
+    <span class="c1"># Giving the field a `label` can help map between your code and the server.</span>
+    <span class="c1"># Set a default value for all instances of this resource</span>
+    <span class="n">user_id</span> <span class="o">=</span> <span class="n">IntField</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;userId&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">123</span><span class="p">)</span>
+    <span class="c1"># Add a callable validator to make sure values conform to any rules the API may have.</span>
+    <span class="c1"># The callable should take one parameter, value, and return a the value if it&#39;s</span>
+    <span class="c1"># valid or raise a ``TypeError``.</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="n">StrField</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;title&quot;</span><span class="p">,</span> <span class="n">validator</span><span class="o">=</span><span class="n">title_max_length</span><span class="p">)</span>
+    <span class="n">body</span> <span class="o">=</span> <span class="n">StrField</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;body&quot;</span><span class="p">)</span>
+
+
+<span class="c1"># You don&#39;t have to do this but I prefer to have all the routes in a container</span>
+<span class="k">class</span> <span class="nc">_Routes</span><span class="p">(</span><span class="n">NamedTuple</span><span class="p">):</span>
+    <span class="c1"># Basic route. No template variables, no query params</span>
+    <span class="n">new_post</span><span class="p">:</span> <span class="n">Route</span> <span class="o">=</span> <span class="n">Route</span><span class="p">(</span><span class="s2">&quot;/posts&quot;</span><span class="p">,</span> <span class="n">HTTPMethods</span><span class="o">.</span><span class="n">POST</span><span class="p">)</span>
+    <span class="c1"># Path that needs an id.</span>
+    <span class="n">get_post</span><span class="p">:</span> <span class="n">Route</span> <span class="o">=</span> <span class="n">Route</span><span class="p">(</span><span class="s2">&quot;/posts/</span><span class="si">{post_id}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">HTTPMethods</span><span class="o">.</span><span class="n">GET</span><span class="p">)</span>
+    <span class="c1"># Path that has some query params it will honor</span>
+    <span class="n">search_posts</span><span class="p">:</span> <span class="n">Route</span> <span class="o">=</span> <span class="n">Route</span><span class="p">(</span><span class="s2">&quot;/posts&quot;</span><span class="p">,</span> <span class="n">HTTPMethods</span><span class="o">.</span><span class="n">GET</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;userId&quot;</span><span class="p">})</span>
+
+
+<span class="n">routes</span> <span class="o">=</span> <span class="n">_Routes</span><span class="p">()</span>
+
+
+<span class="k">class</span> <span class="nc">PostClient</span><span class="p">(</span><span class="n">HTTPBaseClient</span><span class="p">):</span>
+    <span class="c1"># Sometimes you&#39;ll need to add some headers that consuming code doesn&#39;t know about.</span>
+    <span class="k">def</span> <span class="nf">_inject_headers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">req_kwargs</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+        <span class="n">my_headers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Authorization&quot;</span><span class="p">:</span> <span class="s2">&quot;Bearer XXXX&quot;</span><span class="p">}</span>
+        <span class="k">if</span> <span class="n">req_kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;headers&quot;</span><span class="p">):</span>
+            <span class="n">req_kwargs</span><span class="p">[</span><span class="s2">&quot;headers&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">my_headers</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">req_kwargs</span><span class="p">[</span><span class="s2">&quot;headers&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">my_headers</span>
+        <span class="k">return</span> <span class="n">req_kwargs</span>
+
+    <span class="k">def</span> <span class="nf">new_post</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">post</span><span class="p">:</span> <span class="n">Post</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Response</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_request</span><span class="p">(</span><span class="n">routes</span><span class="o">.</span><span class="n">new_post</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">post</span><span class="o">.</span><span class="n">json</span><span class="p">())</span>
+
+    <span class="k">def</span> <span class="nf">get_post</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">post_id</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Response</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_request</span><span class="p">(</span><span class="n">routes</span><span class="o">.</span><span class="n">get_post</span><span class="p">,</span> <span class="n">post_id</span><span class="o">=</span><span class="n">post_id</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">search_posts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Response</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_request</span><span class="p">(</span><span class="n">routes</span><span class="o">.</span><span class="n">search_posts</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="c1"># Create a client and give the full URL of the service you want to interact with</span>
+    <span class="n">client</span> <span class="o">=</span> <span class="n">PostClient</span><span class="p">(</span><span class="s2">&quot;https://jsonplaceholder.typicode.com&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Create a resource</span>
+    <span class="n">post</span> <span class="o">=</span> <span class="n">Post</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;My first Post&quot;</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="s2">&quot;Some body text&quot;</span><span class="p">,</span> <span class="n">user_id</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">new_post</span><span class="p">(</span><span class="n">post</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">())</span>
+
+    <span class="c1"># Use constants like a civilized person</span>
+    <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="n">HTTPResponseCodes</span><span class="o">.</span><span class="n">INTERNAL_SERVER_ERROR</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;they messed up&quot;</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="n">HTTPResponseCodes</span><span class="o">.</span><span class="n">BAD_REQUEST</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;you messed up&quot;</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_post</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="installation.html" class="btn btn-neutral float-right" title="Installation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="Getting Started" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Ian Auld.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

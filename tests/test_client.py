@@ -12,7 +12,7 @@ class TestHTTPClient(HTTPBaseClient):
 
 class TestClient(TestCase):
     def setUp(self):
-        self.client = TestHTTPClient("http://example.com")
+        self.client = TestHTTPClient(baseurl="http://example.com")
         self.route = Route("/api/foo", HTTPMethods.GET, params={"baz", "qux"})
         self.kwargs = {
             "data": json.dumps({"foo": "bar"}),

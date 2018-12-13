@@ -5,7 +5,7 @@ from .exceptions import NonNullableField
 
 
 def _default_validator(value):
-    if isinstance(value, (int, str, float, bool)) or value is None:
+    if isinstance(value, (int, str, float, bool, bytes)) or value is None:
         return value
     else:
         raise TypeError(
@@ -14,6 +14,10 @@ def _default_validator(value):
 
 
 class Field(object):
+    """Base class for the fields on a ``Resource``.
+
+     ``Field`` are containers for values that know how to serialize the values they contain.
+    """
     def __init__(self, label: str=None, nullable: bool=False, default=null,
                  validator: Callable=_default_validator, **kwargs):
         self.label = label
@@ -96,6 +100,9 @@ class ResourceField(Field):
 
 
 class ListField(Field):
+    """
+    Field for value thatshould be serialized as strings.
+    """
     def to_value(self, **kwargs):
         if self.value is None and self.nullable:
             return self.default

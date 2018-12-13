@@ -18,7 +18,8 @@ def title_max_length(value):
 class Post(Resource):
     # This field can be null.
     id = IntField(label="id", nullable=True)
-    # Sometimes the Pythonic naming conventions won't match with the service you are calling. `label` can help.
+    # Sometimes the Pythonic naming conventions won't match with the service you are calling.
+    # Giving the field a `label` can help map between your code and the server.
     # Set a default value for all instances of this resource
     user_id = IntField(label="userId", default=123)
     # add a callable validator to make sure values conform to any rules the API may have. The callable should take one
@@ -41,7 +42,7 @@ routes = _Routes()
 
 
 class PostClient(HTTPBaseClient):
-    # Sometimes you'll need to add some headers that consuming code doesn't know about (or shouldn't know about).
+    # Sometimes you'll need to add some headers that consuming code doesn't know about.
     def _inject_headers(self, req_kwargs: dict) -> dict:
         my_headers = {"Authorization": "Bearer XXXX"}
         if req_kwargs.get("headers"):

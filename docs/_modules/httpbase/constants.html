@@ -1,0 +1,345 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>httpbase.constants &mdash; httpbase  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="httpbase  documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> httpbase
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started/index.html">Getting Started</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../api/index.html">API Documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">httpbase</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>httpbase.constants</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for httpbase.constants</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">NamedTuple</span>
+
+
+<span class="n">DEFAULT_DATE_FORMAT</span> <span class="o">=</span> <span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:</span><span class="si">%s</span><span class="s2">&quot;</span>
+<span class="n">TEMPLATE_VARIABLE_PATTERN</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;{(\w+)}&quot;</span>
+
+<span class="k">class</span> <span class="nc">_HTTPMethods</span><span class="p">(</span><span class="n">NamedTuple</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Container class for HTTP request methods.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">GET</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;get&quot;</span>
+    <span class="n">PUT</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;put&quot;</span>
+    <span class="n">POST</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;post&quot;</span>
+    <span class="n">DELETE</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;delete&quot;</span>
+    <span class="n">PATCH</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;patch&quot;</span>
+    <span class="n">HEAD</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;head&quot;</span>
+    <span class="n">OPTIONS</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;options&quot;</span>
+
+
+<span class="k">class</span> <span class="nc">_HTTPResponseCodes</span><span class="p">(</span><span class="n">NamedTuple</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Container class for HTTP response codes.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Informational.</span>
+    <span class="n">CONTINUE</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span>
+    <span class="n">SWITCHING_PROTOCOLS</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">101</span>
+    <span class="n">PROCESSING</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">102</span>
+    <span class="n">CHECKPOINT</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">103</span>
+    <span class="n">URI_TOO_LONG</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">122</span>
+    <span class="n">OK</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">200</span>
+    <span class="n">CREATED</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">201</span>
+    <span class="n">ACCEPTED</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">202</span>
+    <span class="n">NON_AUTHORITATIVE_INFO</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">203</span>
+    <span class="n">NO_CONTENT</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">204</span>
+    <span class="n">RESET_CONTENT</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">205</span>
+    <span class="n">PARTIAL_CONTENT</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">206</span>
+    <span class="n">MULTI_STATUS</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">207</span>
+    <span class="n">ALREADY_REPORTED</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">208</span>
+    <span class="n">IM_USED</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">226</span>
+
+    <span class="c1"># Redirection.</span>
+    <span class="n">MULTIPLE_CHOICES</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">300</span>
+    <span class="n">MOVED_PERMANENTLY</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">301</span>
+    <span class="n">FOUND</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">302</span>
+    <span class="n">SEE_OTHER</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">303</span>
+    <span class="n">NOT_MODIFIED</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">304</span>
+    <span class="n">USE_PROXY</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">305</span>
+    <span class="n">SWITCH_PROXY</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">306</span>
+    <span class="n">TEMPORARY_REDIRECT</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">307</span>
+    <span class="n">PERMANENT_REDIRECT</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">308</span>
+
+    <span class="c1"># Client Error.</span>
+    <span class="n">BAD_REQUEST</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">400</span>
+    <span class="n">UNAUTHORIZED</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">401</span>
+    <span class="n">PAYMENT_REQUIRED</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">402</span>
+    <span class="n">FORBIDDEN</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">403</span>
+    <span class="n">NOT_FOUND</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">404</span>
+    <span class="n">METHOD_NOT_ALLOWED</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">405</span>
+    <span class="n">NOT_ACCEPTABLE</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">406</span>
+    <span class="n">PROXY_AUTHENTICATION_REQUIRED</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">407</span>
+    <span class="n">REQUEST_TIMEOUT</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">408</span>
+    <span class="n">CONFLICT</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">409</span>
+    <span class="n">GONE</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">410</span>
+    <span class="n">LENGTH_REQUIRED</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">411</span>
+    <span class="n">PRECONDITION_FAILED</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">412</span>
+    <span class="n">REQUEST_ENTITY_TOO_LARGE</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">413</span>
+    <span class="n">REQUEST_URI_TOO_LARGE</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">414</span>
+    <span class="n">UNSUPPORTED_MEDIA_TYPE</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">415</span>
+    <span class="n">REQUESTED_RANGE_NOT_SATISFIABLE</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">416</span>
+    <span class="n">EXPECTATION_FAILED</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">417</span>
+    <span class="n">TEAPOT</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">418</span>
+    <span class="n">ENHANCE_YOUR_CALM</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">420</span>
+    <span class="n">MISDIRECTED_REQUEST</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">421</span>
+    <span class="n">UNPROCESSABLE_ENTITY</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">422</span>
+    <span class="n">LOCKED</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">423</span>
+    <span class="n">FAILED_DEPENDENCY</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">424</span>
+    <span class="n">UNORDERED_COLLECTION</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">425</span>
+    <span class="n">UPGRADE_REQUIRED</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">426</span>
+    <span class="n">PRECONDITION_REQUIRED</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">428</span>
+    <span class="n">TOO_MANY_REQUESTS</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">429</span>
+    <span class="n">HEADER_FIELDS_TOO_LARGE</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">431</span>
+    <span class="n">NO_RESPONSE</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">444</span>
+    <span class="n">RETRY_WITH</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">449</span>
+    <span class="n">BLOCKED_BY_WINDOWS_PARENTAL_CONTROLS</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">450</span>
+    <span class="n">UNAVAILABLE_FOR_LEGAL_REASONS</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">451</span>
+    <span class="n">CLIENT_CLOSED_REQUEST</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">499</span>
+
+    <span class="c1"># Server Error.</span>
+    <span class="n">INTERNAL_SERVER_ERROR</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">500</span>
+    <span class="n">NOT_IMPLEMENTED</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">501</span>
+    <span class="n">BAD_GATEWAY</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">502</span>
+    <span class="n">SERVICE_UNAVAILABLE</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">503</span>
+    <span class="n">GATEWAY_TIMEOUT</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">504</span>
+    <span class="n">HTTP_VERSION_NOT_SUPPORTED</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">505</span>
+    <span class="n">VARIANT_ALSO_NEGOTIATES</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">506</span>
+    <span class="n">INSUFFICIENT_STORAGE</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">507</span>
+    <span class="n">BANDWIDTH_LIMIT_EXCEEDED</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">509</span>
+    <span class="n">NOT_EXTENDED</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">510</span>
+    <span class="n">NETWORK_AUTHENTICATION_REQUIRED</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">511</span>
+
+
+<span class="k">class</span> <span class="nc">_RequestsKwargs</span><span class="p">(</span><span class="n">NamedTuple</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Container class for the kwargs accepted by ``requests``&quot;&quot;&quot;</span>
+    <span class="n">params</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;params&quot;</span>
+    <span class="n">data</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;data&quot;</span>
+    <span class="n">json</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;json&quot;</span>
+    <span class="n">headers</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;headers&quot;</span>
+    <span class="n">cookies</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;cookies&quot;</span>
+    <span class="n">files</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;files&quot;</span>
+    <span class="n">auth</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;auth&quot;</span>
+    <span class="n">timeout</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;timeout&quot;</span>
+    <span class="n">allow_redirects</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;allow_redirects&quot;</span>
+    <span class="n">proxies</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;proxies&quot;</span>
+    <span class="n">stream</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;stream&quot;</span>
+    <span class="n">verify</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;verify&quot;</span>
+    <span class="n">cert</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;cert&quot;</span>
+
+
+<span class="n">HTTPMethods</span> <span class="o">=</span> <span class="n">_HTTPMethods</span><span class="p">()</span>
+<span class="n">HTTPResponseCodes</span> <span class="o">=</span> <span class="n">_HTTPResponseCodes</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="null"><a class="viewcode-back" href="../../api/constants.html#httpbase.constants.null">[docs]</a><span class="k">class</span> <span class="nc">null</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Class for indicating when no value was passed when ``None`` is a possible valid value.</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+    <span class="k">pass</span>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Ian Auld.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

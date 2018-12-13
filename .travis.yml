@@ -1,17 +1,16 @@
 language: python
 python:
-  - "3.6"
+- '3.6'
 install:
-  - pip install -r requirements.txt
-  - pip install coveralls
+- pip install -r requirements.txt
+- pip install coveralls
 script:
-  - coverage run --source httpbase setup.py test
-after_success:
-    coveralls
+- coverage run --source httpbase setup.py test
+after_success: coveralls
 deploy:
   provider: pypi
-  user: imauld
+  user: kylie.a
   password:
-    secure: LNGHf5W/Tn5xNJYYxY29mRvOIGR/w+9qY9kTfAMDcDeQ38I9jWOeVuq84J0c5SZCrJCkxTj3KmzCXs3jHhwoVK8oVF6P42vOmVMUf5ZoU6yJmPIzyR+QlOwS9iQswe7wM8v00aSW1+J9qyapX/nfAXQQAq9n7u7asW0yYnJW837QKL7SsFlSaIwUIlwczU6+MNeNf1+iDe1jdyZb/RlzL9GdFbExFPZgCtYNxAHlgiXE2t4ugi66cDMj4lGMbEG35ym3KsotNx8aVtgQGbvFT9+jopk1JlU2RQTzRs4gDrM+ZukLvObGbf3dXmO00TtNoSvZp/Hs2Md9Ve1PiPnkjDV2eTSFyx4CGNlLPXCzMX0sydee7RsLJh/Q+nTh3SdjFSJLklfkjO7H+UoDJkMvUdcQIKElKSwbUr7zbN8w/o509DNOz7Ase70tAA9KhYsyKrM73K9fkSh6TsUZE1TYT1E3zdEXFWuMF+KPWgzehf8jsSqjKrkSLBIVpcExjuqjqZ79HGi0X0IQUP3q+nLy6pBFskNX1mW1qjQxZc/zmJ1Nkw4ptPe0VPgZupKXly7bGDtjOTRM9FKsS8I9Nt/Of6L1mmrC/5lzinjuJwXpNEnx0BeN2IJ1ycJTZQ16IgSwcAFGI/H10WE3thua++j+FZ41xBGzeEvwt/DJf18KiQU=
+    secure: vEHoOhAR+MJFJkqJp+7YcTXSACknAs7P0eFJwDsyAn2K+BR9sELEBPEcmWk7QnviVapcUXJG4rkzKNqHZM4frmsGyUHwIq4uS72CveOUZeHoaXSpV3Tg+s4pE2E4L6YjqEnBut0Uwdv3sCQmk3HUvcV6ytQzS8FJV3Sg9TuJC2fkteADLKXBs0c/nas3IbIenD/PzicptWFKZHbstyDULxfLT/zPVRFEXSnKstQpeEnXYYttZ/6fnVpWX21WTwf7B+GFsjHBNafniK+bnz6ypz31DjcjT+5UoDD588Bp+9b67qDWviKwgBU6RtRewPokBGYsbZzi0CZOPiLDrYeNH6GKsEzz6bPrV3atLQSNJE24xEtxN1f09OKKXphKebSmnvIzYl1wUUEKMT/OE1zbc6I0q6vRoVbER69evgrEXK8GWkHqH/LQVkTi7KsphAjLQvR1VzM95WRw36e0iOLrhQux+2LdBC6FuZo7vh9n3/vbmWdiIiA7FK/Tk0Mwr0ySZ3+WaruPWjy4FNb+HDeBnQx0UydNbX/Fa9qwWq5+oekP4zWnxVu60jsQEQhYmtNUKfIPc2nBbDR18HHmNzAd4PC9O4RdiqkMe5Bw0QyZhHAaJMPuLO8xFqH9yZQHJjhKyAt2sauLzSa9HBmcLzAy7ZOS/Jr5P4851WpnstOl3dA=
   on:
     tags: true

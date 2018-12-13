@@ -14,7 +14,7 @@ class _HTTPMethods(NamedTuple):
     OPTIONS: str = "options"
 
 
-class _HTTPResponseCodes(NamedTuple):
+class HTTPResponseCodes:
     # Informational.
     CONTINUE: int = 100
     SWITCHING_PROTOCOLS: int = 101
@@ -92,6 +92,26 @@ class _HTTPResponseCodes(NamedTuple):
     NOT_EXTENDED: int = 510
     NETWORK_AUTHENTICATION_REQUIRED: int = 511
 
+    @classmethod
+    def is_1xx_code(cls, status_code: int) -> bool:
+        return cls.CONTINUE <= status_code <= cls.URI_TOO_LONG
+
+    @classmethod
+    def is_2xx_code(cls, status_code: int) -> bool:
+        return cls.OK <= status_code <= cls.IM_USED
+
+    @classmethod
+    def is_3xx_code(cls, status_code: int) -> bool:
+        return cls.MULTIPLE_CHOICES <= status_code <= cls.PERMANENT_REDIRECT
+
+    @classmethod
+    def is_4xx_code(cls, status_code: int) -> bool:
+        return cls.BAD_REQUEST <= status_code <= cls.CLIENT_CLOSED_REQUEST
+
+    @classmethod
+    def is_5xx_code(cls, status_code: int) -> bool:
+        return cls.INTERNAL_SERVER_ERROR <= status_code <= cls.NETWORK_AUTHENTICATION_REQUIRED
+
 
 class _RequestsKwargs(NamedTuple):
     params: str = "params"
@@ -110,7 +130,6 @@ class _RequestsKwargs(NamedTuple):
 
 
 HTTPMethods = _HTTPMethods()
-HTTPResponseCodes = _HTTPResponseCodes()
 
 
 class null:

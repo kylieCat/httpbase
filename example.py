@@ -22,7 +22,7 @@ class Post(Resource):
     # Set a default value for all instances of this resource
     user_id = IntField(label="userId", default=123)
     # add a callable validator to make sure values conform to any rules the API may have. The callable should take one
-    # parameter, value, and return a the value if it's valid or raise a ``TypeError``.
+    # parameter, value, and return a JSON serializable value if it's valid or raise a ``TypeError``.
     title = StrField(label="title", validator=title_max_length)
     body = StrField(label="body")
 
@@ -67,15 +67,20 @@ if __name__ == "__main__":
     # Create a resource
     post = Post(title="My first Post", body="Some body text", user_id=1)
     response = client.new_post(post)
-    print(response.json())
-
-    # Use constants like a civilized person
-    if response.status_code == HTTPResponseCodes.INTERNAL_SERVER_ERROR:
+    # Use convenience methods for checking HTTP response code class.
+    if HTTPResponseCodes.is_5xx_code(response.status_code):
         print("they messed up")
         sys.exit(1)
-    elif response.status_code == HTTPResponseCodes.BAD_REQUEST:
-        print("you messed up")
-        sys.exit(1)
+    elif HTTPResponseCodes.is_4xx_code(response.status_code):
+        # check specific codes, use constants like a civilized persons.
+        if response.status_code == HTTPResponseCodes.NOT_FOUND:
+            print("NOT FOUND!")
+            sys.exit(1)
+        elif response.status_code == HTTPResponseCodes.BAD_REQUEST:
+            print("BAD REQUEST!")
+            sys.exit(1)
+    elif HTTPResponseCodes.is_2xx_code(response.status_code):
+        print(response.json())
 
     response = client.get_post(1)
     print(response.json())

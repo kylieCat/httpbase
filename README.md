@@ -7,4 +7,4 @@ A simple base for HTTP clients
 
 ### Documentation
 
-https://kylie-a.github.io/httpbase
+https://kyliecat.github.io/httpbase
